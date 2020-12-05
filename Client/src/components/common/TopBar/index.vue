@@ -1,0 +1,156 @@
+<template>
+  <transition
+    enter-active-class="animate__animated animate__fadeInDown"
+    leave-active-class="animate__animated animate__fadeOutUp"
+  >
+    <div
+      class="top_bar"
+      :class="isShowBgColor ? 'bg_color' : ''"
+      v-show="isShow"
+    >
+      <v-container fluid>
+        <v-row>
+          <!-- 我的名字or头像logo -->
+          <router-link to="/" class="me col-sm-1 col-2">
+            <img src="../../../assets/img/portrait.png" alt="" />
+          </router-link>
+          <!-- 导航栏 -->
+          <NavBar :navList="navList" class="col-sm-11 col-10" />
+        </v-row>
+      </v-container>
+
+      <transition
+        enter-active-class="animate__animated animate__backInRight"
+        leave-active-class="animate__animated animate__lightSpeedOutRight"
+      >
+        <Menu :navList="navList" v-if="isShowMenu" />
+      </transition>
+      <MyMask v-if="mask" @touchstart.native="closeMenu" />
+    </div>
+  </transition>
+</template>
+
+<script>
+import NavBar from "./NavBar.vue";
+import Menu from "./Menu.vue";
+import MyMask from "@/components/common/MyMask.vue";
+import { mapState } from "vuex";
+export default {
+  components: {
+    NavBar,
+    Menu,
+    MyMask
+  },
+  data: () => ({
+    oldScrollY: 0,
+    isShow: true,
+    isShowBgColor: true,
+    navList: [
+      {
+        word: "看文章",
+        name: "articleList",
+        icon: "icon-tubiao_chakangongyi"
+      },
+      {
+        word: "时间轴",
+        name: "timeTravel",
+        icon: "icon-shalou"
+      },
+      {
+        word: "分类",
+        name: "category",
+        icon: "icon-ziyuan"
+      },
+      {
+        word: "留言板",
+        name: "guestbook",
+        icon: "icon-pinglun"
+      },
+      {
+        word: "关于我",
+        name: "about",
+        icon: "icon-wode"
+      }
+    ]
+  }),
+  computed: {
+    ...mapState("domStore", ["mask", "isShowMenu"])
+  },
+  methods: {
+    closeMenu() {
+      this.$store.commit("domStore/showMenu", false);
+    },
+    // 控制顶部导航栏显示
+    handleTopBar() {
+      console.log("topbar");
+      // 是否要去掉顶部导航栏的背景色
+      this.isShowBgColor = window.scrollY === 0 ? false : true;
+
+      // 是否要隐藏导航栏
+      if (window.scrollY > this.oldScrollY && this.oldScrollY > 200) {
+        this.isShow = false;
+      } else {
+        this.isShow = true;
+      }
+      this.oldScrollY = window.scrollY;
+    }
+  },
+  mounted() {
+    console.log("hello, topbar");
+    window.addEventListener("scroll", this.handleTopBar);
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.handleTopBar);
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.top_bar {
+  width: 100vw;
+  height: $top_bar_height;
+  position: fixed;
+  z-index: $pop_level;
+  // opacity: 0.3;
+  &.bg_color {
+    background-color: $top_bg_color;
+  }
+
+  .container {
+    padding: 0;
+    height: 100%;
+    .row {
+      height: 100%;
+
+      .col {
+        height: 100%;
+      }
+    }
+  }
+
+  .nav_list {
+    background-color: skyblue;
+    .nav {
+      background-color: plum;
+      text-align: center;
+      font-size: 1vw;
+    }
+  }
+
+  .me {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // margin-left: 20px;
+
+    img {
+      background-color: orange;
+      height: 100%;
+      display: block;
+      border-radius: 50%;
+    }
+  }
+}
+</style>

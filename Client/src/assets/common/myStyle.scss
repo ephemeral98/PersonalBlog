@@ -1,0 +1,25 @@
+// 页面的头部
+.welcome_head {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  @include ranbow; // 彩虹预加载
+  // background-image: url(../img/luna7.png);
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/**
+ * chunk阴影边框
+ * @param {*} $color 常态颜色
+ * @param {*} $hoverColor 鼠标移入颜色
+ */
+@mixin borderShadow($color:gray, $hoverColor:gray) {
+  box-shadow: 0 0 10px $color;
+  border-radius: 10px;
+  transition: all 0.8s;
+
+  &:hover {
+    box-shadow: 0 0 40px $hoverColor;
+  }
+}

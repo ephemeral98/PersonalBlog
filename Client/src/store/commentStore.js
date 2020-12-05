@@ -1,0 +1,27 @@
+// 评论区状态管理
+import * as commentHttp from "@/service/CommentService.js";
+
+export default {
+  namespaced: true,
+  state: {
+    floorId: null,
+    nickName: null,
+    floorsData: null,
+    floorsCount: 0
+  },
+  mutations: {
+    setFloorsData(state, payload) {
+      state.floorsData = payload;
+    },
+    setFloorsCount(state, payload) {
+      state.floorsCount = payload;
+    }
+  },
+  actions: {
+    async getMoreComments({ commit }, payload) {
+      const { floorsCount, datas } = await commentHttp.getGuestArea(...payload);
+      commit("setFloorsData", datas);
+      commit("setFloorsCount", floorsCount);
+    }
+  }
+};

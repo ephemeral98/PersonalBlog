@@ -1,0 +1,76 @@
+// vuetify栅格布局的补充
+
+// 栅格尺寸（暂时和vuetify的保持一致）
+$i_sm:600px;
+$i_md:960px;
+$i_lg:1264px;
+$i_xl:1904px;
+$divider: 100% / 12;
+
+@for $size from 1 through 12 {
+
+  // 小型号到大型号的手机（Extra small）
+  @media screen and (max-width: $i_sm) {
+    .xs#{$size} {
+      @for $i from 1 to 10 {
+        &_#{$i} {
+          flex-basis: ($divider * $size) + ($divider * $i / 10);
+          flex-grow: 0;
+          max-width: ($divider * $size) + ($divider * $i / 10);
+        }
+      }
+    }
+  }
+
+  // 小型号到中型号的平板（small）
+  @media screen and (min-width: $i_sm) and (max-width: $i_md) {
+    .sm#{$size} {
+      @for $i from 1 to 10 {
+        &_#{$i} {
+          flex-basis: ($divider * $size) + ($divider * $i / 10);
+          flex-grow: 0;
+          max-width: ($divider * $size) + ($divider * $i / 10);
+        }
+      }
+    }
+  }
+
+  // 大型号平板到手提电脑 (Medium)
+  @media screen and (min-width: $i_md) and (max-width: $i_lg) {
+    .md#{$size} {
+      @for $i from 1 to 10 {
+        &_#{$i} {
+          flex-basis: ($divider * $size) + ($divider * $i / 10);
+          flex-grow: 0;
+          max-width: ($divider * $size) + ($divider * $i / 10);
+        }
+      }
+    }
+  }
+
+  //桌面端 (large)
+  @media screen and (min-width: $i_lg) and (max-width: $i_xl) {
+    .lg#{$size} {
+      @for $i from 1 to 10 {
+        &_#{$i} {
+          flex-basis: ($divider * $size) + ($divider * $i / 10);
+          flex-grow: 0;
+          max-width: ($divider * $size) + ($divider * $i / 10);
+        }
+      }
+    }
+  }
+
+  // 4K 和超宽屏幕（Extra large）
+  @media screen and (min-width: $i_xl) {
+    .xl#{$size} {
+      @for $i from 1 to 10 {
+        &_#{$i} {
+          flex-basis: ($divider * $size) + ($divider * $i / 10);
+          flex-grow: 0;
+          max-width: ($divider * $size) + ($divider * $i / 10);
+        }
+      }
+    }
+  }
+}
