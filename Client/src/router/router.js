@@ -44,7 +44,7 @@ const routes = [
     }
   },
   {
-    path: "/articleCardList",
+    path: "/articleCardList/:CategoryId",
     name: "articleCardList",
     component: () =>
       import(

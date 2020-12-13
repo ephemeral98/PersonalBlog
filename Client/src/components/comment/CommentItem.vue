@@ -9,7 +9,9 @@
       <div class="creed">
         <div class="name">
           {{ floor.name }}
-          <span class="tag">{{ floor.tag === "0" ? "博主" : "访客" }}</span>
+          <span class="tag" :class="floor.tag === '0' ? 'blog_owner' : null">{{
+            floor.tag === "0" ? "博主" : "访客"
+          }}</span>
         </div>
         <div class="time">
           {{ floor.year }}-{{ floor.month }}-{{ floor.date }}
@@ -32,16 +34,16 @@
           <div class="creed">
             <div class="name">
               {{ re.name }}
-              <span class="tag">{{ re.tag === "0" ? "博主" : "访客" }}</span>
+              <span class="tag" :class="re.tag === '0' ? 'blog_owner' : null">{{
+                re.tag === "0" ? "博主" : "访客"
+              }}</span>
             </div>
             <div class="time">
               {{ re.year }}-{{ re.month }}-{{ re.date }} {{ floor.hour }}:{{
                 floor.min
               }}:{{ floor.sec }}
             </div>
-            <div class="content">
-              @{{ re.toWho }}：lorem100 {{ re.content }}
-            </div>
+            <div class="content">@{{ re.toWho }}: {{ re.content }}</div>
           </div>
           <button class="call" @click="toReply(re)">回复</button>
         </li>
@@ -149,5 +151,9 @@ export default {
 img {
   width: 100%;
   height: 100%;
+}
+
+.blog_owner {
+  background-color: $my_blue !important;
 }
 </style>

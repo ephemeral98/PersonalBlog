@@ -1,15 +1,12 @@
 import myAxios from "./Request.js";
 import * as tools from "./tools.js";
 
-// 获取留言板所有内容
-async function getAllGuest() {
-  const url = `./test.json`;
-  const resp = await fetch(url);
-  const res = await resp.json();
-  console.log(res);
-}
-
-// 分段获取留言板内容
+/**
+ * 分段获取评论内容
+ * @param {*} start 从哪条开始
+ * @param {*} limit 获取几条
+ * @param {*} blogId 文章id
+ */
 async function getGuestArea(start, limit, blogId) {
   const url = `/comment`;
   const resp = await myAxios.get(url, {
@@ -30,17 +27,28 @@ async function getGuestArea(start, limit, blogId) {
 }
 
 // 添加新评论
-async function addNewComment(blogId, parent, name, content, email) {
+async function addNewComment({
+  blogId,
+  parent,
+  nickName,
+  commentContent,
+  email,
+  toWho,
+  tag = "1"
+}) {
   const url = `/comment`;
+  console.log(nickName);
+  // console.log(blogId, parent, nickName, commentContent, email, toWho, tag);
   const resp = await myAxios.post(url, {
-    name,
-    content,
-    email,
     blogId,
     parent,
-    tag: "1"
+    name: nickName,
+    content: commentContent,
+    email,
+    toWho,
+    tag
   });
   return resp;
 }
 
-export { getGuestArea, getAllGuest, addNewComment };
+export { getGuestArea, addNewComment };

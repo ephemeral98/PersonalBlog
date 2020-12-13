@@ -1,7 +1,7 @@
 import * as tools from "./tools.js";
 import myAxios from "./Request.js";
 
-// 获取所有文章，用作列表展示
+// 获取所有文章
 async function getAllArticles() {
   const url = "/articles";
   return await tools.getNeeded(url);
@@ -20,6 +20,34 @@ async function getArtByPage(page, limit) {
       limit
     }
   });
+}
+
+/**
+ * 查询某分类下的所有文章
+ * @param {*} CategoryId 分类id
+ */
+async function getArtByCategory(CategoryId) {
+  const url = `/articles/${CategoryId}`;
+  const resp = await myAxios.get(url);
+  return resp;
+}
+
+/**
+ * 分段查询某分类下、的所有文章
+ * @param {*} CategoryId 分类id
+ * @param {*} start 第几次加载
+ * @param {*} limit 每次加载多少条
+ */
+async function getArtByKindSection(CategoryId, start, limit) {
+  const url = `/articles/section/${CategoryId}`;
+  const resp = await tools.getNeeded(url, {
+    params: {
+      start,
+      limit
+    }
+  });
+  console.log(resp);
+  return resp;
 }
 
 /**
@@ -59,4 +87,12 @@ async function addReadings(id) {
   });
 }
 
-export { getAllArticles, getArtByPage, getArticleInfo, addLike, addReadings };
+export {
+  getAllArticles,
+  getArtByPage,
+  getArtByCategory,
+  getArtByKindSection,
+  getArticleInfo,
+  addLike,
+  addReadings
+};

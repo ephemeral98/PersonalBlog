@@ -10,9 +10,12 @@
         :placeholder="
           replyerName ? `@${replyerName}：` : '留下你的宝贵建议吧...'
         "
-        v-model="alertConfig.msgConent"
+        v-model="commentContent"
         v-focus="replyerName"
+        @keydown="controlMax"
+        maxlength="300"
       ></textarea>
+      <div class="count">{{ commentContent.length }}/300</div>
     </v-row>
     <v-row class="mt-2">
       <v-col>
@@ -47,6 +50,8 @@
 
 <script>
 import * as commentHttp from "@/service/CommentService.js";
+import * as handleAlert from "@/utils/handleAlertStatus.js";
+
 import { mapState } from "vuex";
 export default {
   directives: {
@@ -63,71 +68,64 @@ export default {
     alertConfig: {
       alertContent: "",
       isShowAlert: false,
-      msgConent: "",
+      msgContent: "",
       type: "success",
       alertColor: "green"
     },
     nickName: "",
+    parent: -1, // 默认是层主
     email: "",
-    blogId: -1, // 默认是留言板的评论
-    parent: -1 // 默认是层主
+    commentContent: ""
   }),
   computed: {
     ...mapState("commentStore", {
       floorId: "floorId",
       replyerName: "nickName"
-    })
+    }),
+    blogId() {
+      return this.$route.params.articleId || -1; // 默认是留言板的评论
+    }
   },
   methods: {
+    controlMax() {
+      const len = this.commentContent.length;
+      if (len >= 300) {
+        this.commentContent = this.commentContent.slice(0, 300);
+      }
+    },
+
     async submit() {
       // console.log(this.floorId, this.replyerName);
-      const { blogId, nickName, email, floorId } = this;
-      if (!this.alertConfig.msgConent) {
-        this.handleAlertStatus("error", "抱歉，内容不能为空哦");
+      const {
+        blogId,
+        nickName,
+        email,
+        floorId,
+        commentContent,
+        replyerName
+      } = this;
+      if (!this.commentContent) {
+        handleAlert.handleEmpty(this);
         return;
       }
       this.nickName = nickName ? nickName : "匿名";
+      console.log(this.nickName);
       this.parent = floorId ? floorId : "-1";
-      console.log(
+      const parent = this.parent;
+      const addCommentConfig = {
         blogId,
-        this.parent,
-        this.nickName,
-        this.alertConfig.msgConent,
-        email
-      );
+        parent,
+        nickName: this.nickName,
+        commentContent,
+        email,
+        toWho: replyerName,
+        tag: "1"
+      };
       // 发送ajax请求
-      const resp = await commentHttp.addNewComment(
-        blogId,
-        this.parent,
-        this.nickName,
-        this.alertConfig.msgConent,
-        email
-      );
-      console.log(resp);
-      if (resp.data.status === "success") {
-        this.handleAlertStatus("success", "评论成功");
-      } else {
-        this.handleAlertStatus("error", "评论失败");
-      }
-
+      const resp = await commentHttp.addNewComment(addCommentConfig);
+      handleAlert.handleRes(this, resp, "评论成功", "评论失败");
       // 清空输入内容
-      this.alertConfig.msgConent = "";
-    },
-    // 处理弹窗的
-    handleAlertStatus(status, content) {
-      if (status === "success") {
-        this.alertConfig.alertContent = content;
-        this.alertConfig.type = "success";
-        this.alertConfig.alertColor = "green";
-      } else {
-        this.alertConfig.alertContent = content;
-        this.alertConfig.type = "error";
-        this.alertConfig.alertColor = "red";
-      }
-      this.alertConfig.isShowAlert = true;
-      setTimeout(() => {
-        this.alertConfig.isShowAlert = false;
-      }, 2300);
+      this.commentContent = "";
     }
   }
 };
@@ -151,6 +149,12 @@ input {
 
 textarea {
   width: 100%;
+}
+
+.count {
+  color: darken($gray, 10%);
+  font-style: italic;
+  font-size: 12px;
 }
 
 .sub {

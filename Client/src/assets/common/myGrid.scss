@@ -1,10 +1,10 @@
 // vuetify栅格布局的补充
 
 // 栅格尺寸（暂时和vuetify的保持一致）
-$i_sm:600px;
-$i_md:960px;
-$i_lg:1264px;
-$i_xl:1904px;
+$i_sm:599px;
+$i_md:959px;
+$i_lg:1263px;
+$i_xl:1903px;
 $divider: 100% / 12;
 
 @for $size from 1 through 12 {

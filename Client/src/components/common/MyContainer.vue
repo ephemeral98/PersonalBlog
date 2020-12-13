@@ -8,9 +8,9 @@
       <v-flex class="d-sm-flex flex-column tips" xs12 sm2_5 md2_5 lg2_5 xl2_5>
         <MyCard />
         <div class="declare mt-5">
-          <div class="title">公告</div>
+          <div class="my_title iconfont">公告&#xec40;</div>
           <div class="content">
-            感谢来访，喜欢的话可以常来逛逛，不定期更新内容！
+            如果你来访，我不在，请和我门外的花坐一会儿。它们很温暖，我注视它们很多很多日子了。它们开得不茂盛，想起来什么说什么。
           </div>
         </div>
       </v-flex>
@@ -48,8 +48,9 @@ export default {
       box-shadow: 0 0 20px gray;
       padding: 5px 20px;
 
-      .title {
+      .my_title {
         color: $my_pink;
+        font-size: 1.3rem;
       }
     }
   }

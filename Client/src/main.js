@@ -12,22 +12,6 @@ import "@/assets/icon/iconfont.css";
 
 Vue.use(Vuetify);
 Vue.use(animated);
-// Vue.use(Vtify);
-
-// import MyAlert from "@/test";
-// Vue.prototype.$alert = MyAlert.install;
-
-/* router.beforeEach((to, from, next) => {
-  if (to.name === "articleList") {
-    // MyAlert.install({
-    //   isShow: true
-    // });
-    // next(false);
-    window.alert("请先登录");
-  } else {
-    next();
-  }
-}); */
 
 // Vtify.config.silent = true;
 Vue.config.productionTip = false;

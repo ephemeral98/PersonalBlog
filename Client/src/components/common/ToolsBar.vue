@@ -46,6 +46,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@keyframes shake {
+  0% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+
 .tools {
   width: 70px;
   // background-color: gold;
@@ -65,6 +74,19 @@ export default {
 
     &:hover {
       background-image: linear-gradient($my_blue, $my_pink, red);
+      animation: shake 0.1s ease-in-out infinite alternate;
+
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        background-image: linear-gradient(to bottom, red, transparent);
+        width: 10px;
+        height: 70px;
+        left: 50%;
+        border-radius: 10px;
+        transform: translateX(-50%);
+      }
     }
   }
 }

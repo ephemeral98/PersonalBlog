@@ -29,15 +29,16 @@ function getMyDate(time) {
 async function getNeeded(url, params) {
   const resp = await myAxios.get(url, params);
   if (resp.data.status === "success") {
-    const { count } = resp.data.data.datas;
-    const artList = resp.data.data.datas.rows.map(art => {
-      const { id, title, introduce, categoryName, createdAt } = art;
+    const count = resp.data.data.totals;
+    const infos = resp.data.data.datas.rows || resp.data.data.datas;
+    const artList = infos.map(art => {
+      const { id, title, introduce, Category, createdAt } = art;
 
       return {
         id,
         title,
         introduce,
-        categoryName,
+        Category,
         ...getMyDate(createdAt)
       };
     });
@@ -102,31 +103,33 @@ function commentHelper(originData) {
   // 取出 parent 是 -1 的数组（层主），再按照 时间倒序
   const floor = originData
     .filter(item => (item.parent == -1 ? item : null))
-    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+    .map(f => {
+      // 层主的时间格式也弄一弄
+      const { year, month, date, hour, min, sec } = getMyDate(f.createdAt);
+      f.year = year;
+      f.month = month;
+      f.date = date;
+      f.hour = hour;
+      f.min = min;
+      f.sec = sec;
+      return f;
+    });
 
-  // 帮助那班 parent 不是 -1 的数组找大佬（帮回复找层主）
-  let res = [];
-  replySameParent.forEach(reply => {
-    res = floor
-      .map(f => {
+  // 如果有真有回复 帮助那班 parent 不是 -1 的数组找大佬（帮回复找层主）
+  if (replySameParent.length > 0) {
+    let res = [];
+    replySameParent.forEach(reply => {
+      res = floor.map(f => {
         if (reply[0].parent == f.id) {
           f.reply = reply;
         }
         return f;
-      })
-      .map(f => {
-        // 层主的时间格式也弄一弄
-        const { year, month, date, hour, min, sec } = getMyDate(f.createdAt);
-        f.year = year;
-        f.month = month;
-        f.date = date;
-        f.hour = hour;
-        f.min = min;
-        f.sec = sec;
-        return f;
       });
-  });
-  return res;
+    });
+    return res;
+  }
+  return floor;
 }
 
 export { getNeeded, commentHelper, getMyDate };

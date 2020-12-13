@@ -1,18 +1,22 @@
 <template>
   <router-link
-    :to="{ name: 'article', params: { articleId: 4 } }"
+    :to="{ name: 'article', params: { articleId: article.id } }"
     class="card hang"
   >
     <!-- <img src="../../assets/img/luna7.png" alt="" ref="preImg" /> -->
     <div class="infos">
-      <div class="title">这是标题</div>
-      <div class="content mt-sm-3">2020-11-15 · 数码科技</div>
+      <div class="title">{{ article.title }}</div>
+      <div class="content mt-sm-3">
+        {{ article.year }}-{{ article.month }}-{{ article.date }} ·
+        {{ article.Category.name }}
+      </div>
     </div>
   </router-link>
 </template>
 
 <script>
 export default {
+  props: ["article"],
   mounted() {
     /* const layoutImg = this.$refs.preImg; // 当图片加载完成的时候，设置一下尺寸
     layoutImg.addEventListener("load", () => {
@@ -66,6 +70,7 @@ export default {
     color: #fff;
 
     .title {
+      @include singleOverHidden;
       font-weight: bold !important;
       font-size: 2.5vw !important;
     }

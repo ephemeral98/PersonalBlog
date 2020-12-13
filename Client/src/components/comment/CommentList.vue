@@ -34,7 +34,10 @@ export default {
     loadTimes: 2 // 第2次加载开始
   }),
   computed: {
-    ...mapState("commentStore", ["floorsData", "floorsCount"])
+    ...mapState("commentStore", ["floorsData", "floorsCount"]),
+    articleId() {
+      return this.$route.params.articleId || -1;
+    }
   },
   methods: {
     /**
@@ -48,15 +51,22 @@ export default {
      */
     async moreComment() {
       // 从第二次加载开始，每次追加载7条评论
-      this.$store.dispatch("commentStore/getMoreComments", [this.loadTimes, 7]);
+      this.$store.dispatch("commentStore/getMoreComments", [
+        this.loadTimes,
+        7,
+        this.articleId
+      ]);
       this.loadTimes++;
     }
+  },
+  mounted() {
+    console.log(this.floorsData);
   }
 };
 </script>
 <style lang="scss" scoped>
 .comment {
-  padding: 1.7vw 1vw 100px;
+  padding: 1.7vw 1vw 10vw;
 
   position: relative;
 
@@ -68,26 +78,11 @@ export default {
   }
 
   .more {
-    width: 140px;
-    padding: 5px 10px;
-    border: solid 1px lighten(gray, 40%);
-    font-size: 20px;
-    color: gray;
-    transition: all 0.8s;
-    @include center(absolute);
-    top: 98.5%;
-
-    &:hover {
-      box-shadow: 0 0 20px lighten(gray, 10%);
-    }
+    @include more;
   }
 
   .nomore {
-    @extend .more;
-    border: none;
-    &:hover {
-      box-shadow: none;
-    }
+    @include nomore;
   }
 }
 </style>

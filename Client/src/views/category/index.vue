@@ -1,7 +1,5 @@
 <template>
   <v-main class="category">
-    <TopBar />
-
     <header class="welcome_head">
       <CentralWord welcomeWord="分类" />
       <EnterMain></EnterMain>
@@ -11,12 +9,14 @@
       <div class="wrapper d-flex justify-center">
         <!-- <div class="title">分类：{{ categories.total }}</div> -->
         <div class="content mt-10 justify-center">
-          <li
-            v-for="kind in categories.datas"
-            :key="kind.id"
-            class="float-left"
-          >
-            <router-link :to="{ name: 'articleCardList' }">
+          <li v-for="kind in categories" :key="kind.id" class="float-left">
+            <router-link
+              :to="{
+                name: 'articleCardList',
+                params: { CategoryId: kind.id },
+                query: { CategoryName: kind.name }
+              }"
+            >
               <div class="door">
                 <div class="door_inner">
                   {{ kind.name }} ({{ kind.count || 0 }})
@@ -39,7 +39,6 @@
 
 <script>
 // @ is an alias to /src
-import TopBar from "@/components/common/TopBar";
 import CentralWord from "@/components/common/CentralWord";
 import EnterMain from "@/components/common/CentralWord/EnterMain";
 import MyContainer from "@/components/common/MyContainer.vue";
@@ -49,80 +48,16 @@ import * as categoryHttp from "@/service/CategoryService.js";
 export default {
   name: "Home",
   components: {
-    TopBar,
     CentralWord,
     EnterMain,
     MyContainer,
     MyFoot
   },
   data: () => ({
-    categories: {
-      total: 10,
-      datas: [
-        {
-          id: 2,
-          name: "科技",
-          count: 333
-        },
-        {
-          id: 3,
-          name: "英语",
-          count: 444
-        },
-        {
-          id: 4,
-          name: "语文",
-          count: 555
-        },
-        {
-          id: 5,
-          name: "数学",
-          count: 666
-        },
-        {
-          id: 6,
-          name: "体育",
-          count: 777
-        },
-        {
-          id: 7,
-          name: "体育",
-          count: 777
-        },
-        {
-          id: 8,
-          name: "体育",
-          count: 777
-        },
-        {
-          id: 9,
-          name: "体育",
-          count: 777
-        },
-        {
-          id: 10,
-          name: "体育",
-          count: 777
-        },
-        {
-          id: 11,
-          name: "体育",
-          count: 777
-        },
-        {
-          id: 12,
-          name: "体育",
-          count: 777
-        }
-      ]
-    }
+    categories: {}
   }),
   async created() {
-    const { totals, datas } = await categoryHttp.getAllKind();
-    this.categories = {
-      totals,
-      datas
-    };
+    this.categories = await categoryHttp.getAllKindAndCount();
   }
 };
 </script>

@@ -20,6 +20,7 @@ export default {
   actions: {
     async getMoreComments({ commit }, payload) {
       const { floorsCount, datas } = await commentHttp.getGuestArea(...payload);
+      console.log("hello, comment", datas, floorsCount);
       commit("setFloorsData", datas);
       commit("setFloorsCount", floorsCount);
     }

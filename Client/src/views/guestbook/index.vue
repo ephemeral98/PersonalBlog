@@ -1,7 +1,5 @@
 <template>
   <div class="comment">
-    <TopBar />
-
     <header class="welcome_head">
       <CentralWord welcomeWord="留言板" />
       <EnterMain></EnterMain>
@@ -18,7 +16,6 @@
 </template>
 
 <script>
-import TopBar from "@/components/common/TopBar";
 import CentralWord from "@/components/common/CentralWord";
 import EnterMain from "@/components/common/CentralWord/EnterMain";
 import CommentList from "@/components/comment/CommentList.vue";
@@ -26,7 +23,6 @@ import MyFoot from "@/components/common/MyFoot.vue";
 import ToolsBar from "@/components/common/ToolsBar";
 export default {
   components: {
-    TopBar,
     CommentList,
     CentralWord,
     EnterMain,

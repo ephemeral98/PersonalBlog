@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="{ name: 'article', params: { articleId: 4 } }"
+    :to="{ name: 'article', params: { articleId: art.id } }"
     class="row article"
     :class="queue % 2 === 0 ? 'que' : 'reQue'"
   >
@@ -17,7 +17,9 @@
           >{{ art.year }}-{{ art.month }}-{{ art.date }}</span
         >
         |
-        <span class="iconfont icon-ziyuan">{{ art.categoryName }}</span>
+        <span class="iconfont icon-ziyuan">{{
+          art.Category && art.Category.name
+        }}</span>
       </div>
       <p class="art_intoduce">{{ art.introduce }}</p>
     </v-flex>
@@ -38,6 +40,7 @@ export default {
   overflow: hidden;
   box-sizing: border-box;
   @include borderShadow;
+  color: $my_blue;
 
   &:hover {
     transform: translateY(7px);
@@ -66,11 +69,12 @@ export default {
 .place_img {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 img {
   width: 100%;
-  height: 100%;
+  // height: 100%;
 }
 
 // 手机屏

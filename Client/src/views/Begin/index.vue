@@ -3,27 +3,30 @@
     <canvas ref="cvs"></canvas>
     <img src="../myView.png" alt="" class="buildingView" />
     <div class="filter"></div>
-
-    <CentralWord class="central_word" welcomeWord="这是欢迎页" :isBegin="true">
+    <CentralWord class="central_word" welcomeWord="BA-Moment" :isBegin="true">
       <!-- 打字效果 -->
       <v-row justify="center" class="introduce" ref="typeContent"></v-row>
     </CentralWord>
     <router-link :to="{ name: 'articleList' }">
       <BlinkBtn class="start_btn">Start</BlinkBtn>
     </router-link>
+    <!-- <BgMusic :notTopBar="true" /> -->
   </div>
 </template>
 
 <script>
 import CentralWord from "@/components/common/CentralWord";
 import BlinkBtn from "@/components/common/BlinkBtn.vue";
+import dayWordsHttp from "@/service/DayWordsService.js";
 import Star from "./Star.js";
 import typing from "@/utils/typing.js";
+// import BgMusic from "@/components/common/BgMusic.vue";
 
 export default {
   components: {
     CentralWord,
     BlinkBtn
+    // BgMusic
   },
   data: () => ({
     typingContent: "山有小口，仿佛若有光...",
@@ -62,6 +65,10 @@ export default {
       requestAnimationFrame(this.animate);
     }
   },
+  async created() {
+    this.typingContent = await dayWordsHttp();
+    typing(this.$refs.typeContent, this.typingContent, true, 5);
+  },
   mounted() {
     this.sky = this.$refs.sky;
     this.canvas = this.$refs.cvs;
@@ -69,7 +76,6 @@ export default {
 
     this.setCanvasSize();
     this.init();
-    typing(this.$refs.typeContent, this.typingContent, true, 5);
   }
 };
 </script>
@@ -118,7 +124,7 @@ export default {
   .buildingView {
     position: absolute;
     left: -2%;
-    bottom: -75%;
+    bottom: -37vw;
     width: 110%;
   }
   .central_word {

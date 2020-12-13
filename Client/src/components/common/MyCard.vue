@@ -11,21 +11,18 @@
       />
     </v-row>
     <v-row justify="center" style="fontsize: 7vw" class="name"> Barry </v-row>
-    <v-row justify="center" class="mb-5 introduce"
-      >Lorem ipsum dolor sit. Lorem ipsum, dolor sit amet consectetur >Lorem
-      ipsum dolor sit. Lorem ipsum, dolor sit amet consectetur >Lorem ipsum
-      dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-      Velit, enim?</v-row
-    >
+    <v-row justify="center" class="mb-5 introduce">{{ dayWords }}</v-row>
   </div>
 </template>
 
 <script>
 import * as utils from "@/utils/toolsFunc.js";
+import dayWordHttp from "@/service/DayWordsService.js";
 export default {
   data: () => ({
     ava: null,
-    rotateDeg: 90
+    rotateDeg: 90,
+    dayWords: ""
   }),
   methods: {
     spining() {
@@ -33,6 +30,9 @@ export default {
       this.ava.style.transform = `rotate(${this.rotateDeg}deg)`;
       this.rotateDeg += utils.getRandom(90, 270);
     }
+  },
+  async created() {
+    this.dayWords = await dayWordHttp();
   },
   mounted() {
     this.ava = this.$refs.avatar;

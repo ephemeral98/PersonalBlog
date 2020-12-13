@@ -1,7 +1,5 @@
 <template>
   <div class="article_list">
-    <TopBar />
-
     <header class="welcome_head">
       <CentralWord welcomeWord="看文章" />
       <EnterMain></EnterMain>
@@ -24,7 +22,6 @@
 
 <script>
 // @ is an alias to /src
-import TopBar from "@/components/common/TopBar";
 import EnterMain from "@/components/common/CentralWord/EnterMain.vue";
 import CentralWord from "@/components/common/CentralWord";
 import ArticleList from "@/components/ArticleList";
@@ -35,7 +32,6 @@ import * as artHttp from "@/service/ArticleService.js";
 export default {
   // name: "ArticleList",
   components: {
-    TopBar,
     EnterMain,
     CentralWord,
     ArticleList,
@@ -61,6 +57,8 @@ export default {
   watch: {
     page: {
       async handler() {
+        const height = document.documentElement.clientHeight;
+        window.scrollTo(0, height);
         const { artList } = await artHttp.getArtByPage(
           this.page,
           this.perPageSum

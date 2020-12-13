@@ -1,6 +1,5 @@
 <template>
   <div class="articles">
-    <TopBar />
     <CompHead>文章总览(时间轴)</CompHead>
     <MyContainer>
       <div class="article_list">
@@ -35,13 +34,11 @@
 </template>
 
 <script>
-import TopBar from "@/components/common/TopBar";
 import CompHead from "@/components/common/CompHead.vue";
 import MyContainer from "@/components/common/MyContainer.vue";
 import MyFoot from "@/components/common/MyFoot.vue";
 export default {
   components: {
-    TopBar,
     CompHead,
     MyContainer,
     MyFoot

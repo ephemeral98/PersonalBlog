@@ -10,12 +10,15 @@
     >
       <v-container fluid>
         <v-row>
-          <!-- 我的名字or头像logo -->
-          <router-link to="/" class="me col-sm-1 col-2">
-            <img src="../../../assets/img/portrait.png" alt="" />
-          </router-link>
+          <!-- 我的名字or头像logo & 背景音乐 -->
+          <div class="left col-3 d-flex justify-start">
+            <router-link to="/" class="me">
+              <img src="../../../assets/img/portrait.png" alt="" />
+            </router-link>
+            <!-- <BgMusic class="d-flex align-center" style="padding: 0" /> -->
+          </div>
           <!-- 导航栏 -->
-          <NavBar :navList="navList" class="col-sm-11 col-10" />
+          <NavBar :navList="navList" class="col-9" />
         </v-row>
       </v-container>
 
@@ -34,12 +37,14 @@
 import NavBar from "./NavBar.vue";
 import Menu from "./Menu.vue";
 import MyMask from "@/components/common/MyMask.vue";
+// import BgMusic from "@/components/common/BgMusic.vue";
 import { mapState } from "vuex";
 export default {
   components: {
     NavBar,
     Menu,
     MyMask
+    // BgMusic
   },
   data: () => ({
     oldScrollY: 0,
@@ -82,15 +87,16 @@ export default {
     },
     // 控制顶部导航栏显示
     handleTopBar() {
-      console.log("topbar");
       // 是否要去掉顶部导航栏的背景色
       this.isShowBgColor = window.scrollY === 0 ? false : true;
 
       // 是否要隐藏导航栏
       if (window.scrollY > this.oldScrollY && this.oldScrollY > 200) {
         this.isShow = false;
+        this.$emit("hideMusic", false);
       } else {
         this.isShow = true;
+        this.$emit("hideMusic", true);
       }
       this.oldScrollY = window.scrollY;
     }
@@ -137,20 +143,31 @@ export default {
     }
   }
 
-  .me {
-    width: 100%;
+  .left {
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    // margin-left: 20px;
+    padding: 5px;
 
-    img {
-      background-color: orange;
+    .me {
+      // width: 100%;
       height: 100%;
-      display: block;
-      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      // margin-left: 20px;
+
+      img {
+        background-color: orange;
+        height: 100%;
+        display: block;
+        border-radius: 50%;
+      }
     }
+  }
+}
+
+@media screen and (max-width: $i_md) {
+  .left {
+    padding: 12px !important;
   }
 }
 </style>

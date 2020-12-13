@@ -1,6 +1,5 @@
 <template>
   <div class="article">
-    <TopBar />
     <CompHead>
       <div>{{ artInfo.title || "标题" }}</div>
       <div class="art_info d-flex justify-center flex-wrap">
@@ -8,10 +7,10 @@
           <span>{{ artInfo.month }}.{{ artInfo.date }}.{{ artInfo.year }}</span>
         </div>
         <div>
-          阅读：<span>{{ artInfo.readNum }}</span>
+          阅读：<span>{{ artInfo.readNum || 0 }}</span>
         </div>
         <div>
-          字数：<span>{{ artInfo.wordNum }}</span>
+          字数：<span>{{ artInfo.wordsNum || 0 }}</span>
         </div>
         <div>
           评论：<span>{{ floorsCount || 0 }}</span>
@@ -46,16 +45,15 @@
 </template>
 
 <script>
-import TopBar from "@/components/common/TopBar";
 import CompHead from "@/components/common/CompHead.vue";
 import CommentList from "@/components/comment/CommentList.vue";
 import MyFoot from "@/components/common/MyFoot.vue";
 import ToolsBar from "@/components/common/ToolsBar";
 import * as articleHttp from "@/service/ArticleService.js";
+import { mapState } from "vuex";
 
 export default {
   components: {
-    TopBar,
     CompHead,
     CommentList,
     MyFoot,
@@ -63,10 +61,15 @@ export default {
   },
   data: () => ({
     artInfo: {},
-    articleId: null,
-    floorsCount: 0,
     isLikeThisTime: false // 每次只能like一次（刷新后还能继续like）
   }),
+  computed: {
+    ...mapState("commentStore", ["floorsCount"]),
+    articleId() {
+      return this.$route.params.articleId;
+    }
+  },
+
   methods: {
     async giveLike(e) {
       if (this.isLikeThisTime) {
@@ -82,10 +85,8 @@ export default {
     }
   },
   async created() {
-    const { articleId } = this.$route.params; // 该文章的id
-    this.articleId = articleId;
     // 发送ajax 获取文章信息
-    const resp = await articleHttp.getArticleInfo(articleId);
+    const resp = await articleHttp.getArticleInfo(this.articleId);
     this.artInfo = resp;
     console.log(resp);
 
@@ -93,8 +94,11 @@ export default {
     this.$refs.introContent.innerHTML = this.artInfo.introduce; // 文章介绍
 
     // 异步分发，获取该文章下的评论
-    this.$store.dispatch("commentStore/getMoreComments", [1, 5, +articleId]);
-    this.floorsCount = this.$store.state.commentStore.floorsCount;
+    this.$store.dispatch("commentStore/getMoreComments", [
+      1,
+      5,
+      +this.articleId
+    ]);
   },
   mounted() {
     window.scrollTo(0, 0);

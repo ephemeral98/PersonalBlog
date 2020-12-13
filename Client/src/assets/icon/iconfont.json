@@ -20,6 +20,13 @@
       "unicode_decimal": 58930
     },
     {
+      "icon_id": "755613",
+      "name": "暂停",
+      "font_class": "stop",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
       "icon_id": "779525",
       "name": "表情分类默认",
       "font_class": "biaoqingfenleimoren",
@@ -107,8 +114,8 @@
       "icon_id": "2407248",
       "name": "分类",
       "font_class": "tubiao-",
-      "unicode": "e650",
-      "unicode_decimal": 58960
+      "unicode": "e651",
+      "unicode_decimal": 58961
     },
     {
       "icon_id": "2468146",
@@ -216,6 +223,13 @@
       "unicode_decimal": 58914
     },
     {
+      "icon_id": "6207825",
+      "name": "播放",
+      "font_class": "ziyuanldpi",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
       "icon_id": "6279238",
       "name": "首页",
       "font_class": "shouye1",
@@ -263,6 +277,13 @@
       "font_class": "ziyuan1",
       "unicode": "e63e",
       "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "10043627",
+      "name": "喇叭",
+      "font_class": "xinbaniconshangchuan-",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
     },
     {
       "icon_id": "10148099",
@@ -319,6 +340,20 @@
       "font_class": "rili1",
       "unicode": "e634",
       "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "16542994",
+      "name": "喇叭",
+      "font_class": "laba",
+      "unicode": "e6c7",
+      "unicode_decimal": 59079
+    },
+    {
+      "icon_id": "16888599",
+      "name": "喇叭",
+      "font_class": "laba1",
+      "unicode": "ec40",
+      "unicode_decimal": 60480
     }
   ]
 }
