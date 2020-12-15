@@ -1,0 +1,59 @@
+@mixin normal_btn($width:120px, $height:50px) {
+  width: $width;
+  height: $height;
+  background-color: $my_blue;
+  border-radius: 20px;
+  transition: all 1s;
+  font-size: 18px;
+
+  &:hover {
+    background-color: $my_pink;
+    color: #fff;
+  }
+}
+
+// 确认和取消按钮
+.confirm__btn,
+.cancel__btn {
+  height: 40px;
+  align-self: center;
+  padding: 20px;
+  font-size: 20px;
+  line-height: 0;
+  background-color: lightblue;
+  border-radius: 8px;
+  transition: all 1s;
+
+  &:hover {
+    background-color: pink;
+  }
+}
+
+@mixin upload_btn($fileClass, $width:100px, $height:40px, $color:$my_blue, $hColor:$my_pink) {
+  position: relative;
+  width: $width;
+  height: $height;
+  background-color: $color;
+  display: block;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 20px;
+  font-size: 15px;
+  overflow: hidden;
+
+  &:hover {
+    background-color: $hColor;
+    color: #fff;
+  }
+
+  .#{$fileClass} {
+    cursor: pointer;
+    width: 100%;
+    height: inherit;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+  }
+}

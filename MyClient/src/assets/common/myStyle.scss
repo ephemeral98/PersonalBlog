@@ -1,0 +1,45 @@
+// 滚动条样式
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: $my_pink;
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  border-radius: 2em;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color:$my_blue;
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  border-radius: 2em;
+}
+
+::selection{
+  background-color: lighten($my_blue, 15%);
+}
+
+/**
+ * chunk阴影边框
+ * @param {*} $color 常态颜色
+ * @param {*} $hoverColor 鼠标移入颜色
+ */
+@mixin borderShadow($color:gray, $hoverColor:gray) {
+  box-shadow: 0 0 10px $color;
+  border-radius: 10px;
+  transition: all 0.8s;
+
+  &:hover {
+    box-shadow: 0 0 40px $hoverColor;
+  }
+}
+
+// 消息框
+.status_msg {
+  @include modal_center(300px);
+  font-size: 20px;
+  text-align: center;
+}
