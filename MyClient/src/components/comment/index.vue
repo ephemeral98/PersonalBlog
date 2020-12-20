@@ -71,7 +71,7 @@ export default {
     .btn {
       width: 100px;
       height: 50px;
-      background-color: rgba($my_blue, 50%);
+      background-color: lighten($gray, 5%);
       display: flex;
       align-items: center;
       justify-content: center;

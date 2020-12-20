@@ -17,8 +17,10 @@ async function declare(articleInfos) {
  */
 async function findAticleById(id) {
   const url = `/articles/detail/${id}`;
-  const res = await myAxios().get(url);
-  return res;
+  const resp = await myAxios().get(url);
+  if (resp.data.status === "success") {
+    return resp.data.data;
+  }
 }
 
 /**

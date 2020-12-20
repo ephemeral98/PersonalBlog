@@ -13,13 +13,13 @@
       <div class="section">
         <!-- 修改文章内容区 -->
         <div class="editorArea">
-          <MyEditor :artcleInfos="editorInfo" />
+          <MyEditor />
         </div>
       </div>
       <div class="section">
         <!-- 文章信息区 -->
         <div class="articlecomment">
-          <ArticleInfos v-if="isShowInfos" :articleDetailInfo="toArtConfig" />
+          <ArticleInfos :articleDetailInfo="toArtConfig" />
         </div>
       </div>
     </full-page>
@@ -29,7 +29,7 @@
 <script>
 import MyEditor from "../../components/MyEditor";
 import ArticleInfos from "../../components/ArticleInfos.vue";
-import * as ArticleHttp from "../../service/ArticleService.js";
+// import * as ArticleHttp from "../../service/ArticleService.js";
 
 export default {
   components: {
@@ -39,10 +39,8 @@ export default {
 
   data() {
     return {
-      artDetail: {}, // 用来装一篇文章的所有信息
       toStatusModal: {},
       showStatus: false,
-      isShowInfos: false,
       isShowIssue: false,
       options: {
         afterLoad: this.afterLoad,
@@ -72,14 +70,6 @@ export default {
     }
   },
   methods: {
-    afterLoad: function(origin, destination) {
-      // fullpage 滚到第 n 屏的时候
-      if (destination.index === 1) {
-        this.isShowInfos = true;
-      } else if (destination.index === 2) {
-        this.isShowIssue = true;
-      }
-    },
     handleCloseStatus() {
       this.showStatus = false;
       this.$router.go(0);
@@ -102,27 +92,15 @@ export default {
       this.$router.back();
     }
   },
-  watch: {
-    artDetail() {
-      this.toArtConfig = {
-        wordNum: { name: "字数", val: this.artDetail.wordsNum },
-        readNum: { name: "阅读数", val: this.artDetail.readNum },
-        likeNum: { name: "点赞数", val: this.artDetail.likeNum },
-        commentNum: { name: "评论数", val: null }
-      };
-    }
-  },
   async created() {
+    console.log(this);
     const id = this.$route.params.id;
-    const articleInfo = await ArticleHttp.findAticleById(id);
-    this.artDetail = articleInfo.data.data; // 一篇文章的细节信息
-
-    // 异步分发，获取该文章下的评论
-    this.$store.dispatch("commentStore/getMoreComments", [1, 5, 4]); // temp: +id
-    // this.floorsCount = this.$store.state.commentStore.floorsCount;
-    console.log(this.$store.state);
-
-    console.log("文章的所有细节信息都拿到了。", this.artDetail);
+    // 一篇文章的细节信息
+    this.$store.dispatch("articleStore/getArtById", id);
+    console.log("hello");
+  },
+  beforeDestroy() {
+    this.$store.state.articleStore.articleDetail = null;
   }
 };
 </script>
@@ -149,13 +127,14 @@ export default {
   }
 
   .back {
-    background-color: rgba($my_blue, 0.4);
+    background-color: $gray;
     display: block;
     padding: 5px;
     position: fixed;
     top: 0;
     z-index: 9;
     margin-top: 100px;
+    color: gray;
 
     &:hover {
       color: #fff;

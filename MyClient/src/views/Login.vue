@@ -45,7 +45,7 @@
 </template>
 
 <script>
-// import * as adminHttp from "@/service/AdminService.js";
+import * as adminHttp from "@/service/AdminService.js";
 export default {
   data() {
     return {
@@ -54,7 +54,7 @@ export default {
       tips: "",
       captcha: null,
       verCode: "",
-      captchaUrl: `/captcha?${Math.random()}`,
+      captchaUrl: `/captcha?${Math.random()}`
     };
   },
   methods: {
@@ -67,13 +67,13 @@ export default {
           // okVariant: "success",
           headerClass: "p-2 border-bottom-0",
           footerClass: "p-2 border-top-0",
-          centered: true,
+          centered: true
         })
-        .then((value) => {
+        .then(value => {
           this.tips = value;
           callback();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -83,15 +83,15 @@ export default {
       const user = await this.$store.dispatch("adminStore/login", {
         loginId,
         password,
-        captcha,
+        captcha
       });
       // alert(user.msg);
       try {
-        console.log(user.status)
+        console.log(user.status);
         if (user.status === "success") {
           this.showSignMsg("登录成功", () => {
             this.$router.push({
-              path: this.$route.meta.redirectPath,
+              path: this.$route.meta.redirectPath
             });
           });
         } else if (user.status === "fail") {
@@ -110,8 +110,13 @@ export default {
 
     reflash() {
       this.$refs.captchaImg.src = `/captcha?${Math.random()}`;
-    },
+    }
   },
+
+  async created() {
+    const resp = adminHttp.addOne();
+    console.log(resp);
+  }
 };
 </script>
 

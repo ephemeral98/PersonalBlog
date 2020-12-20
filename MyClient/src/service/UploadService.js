@@ -7,11 +7,12 @@ const headerConfig = {
 };
 
 /**
- * 上传头像
+ * 上传单个文件
  * @param {object} formData Filelist 文件的相关属性
  */
-async function upPortrait(formData) {
-  const url = "/api/upload/portrait";
+async function upSingle(formData) {
+  console.log(formData);
+  const url = "/api/upload/singleImg";
   return await myAxios().post(url, formData, headerConfig);
 }
 
@@ -24,4 +25,4 @@ async function upMultiple(formData) {
   return await myAxios().post(url, formData, headerConfig);
 }
 
-export { upPortrait, upMultiple };
+export { upSingle, upMultiple };

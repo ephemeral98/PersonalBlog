@@ -70,6 +70,12 @@ async function changeNickAndSign(loginId, { nickName, signature }) {
   return resNickAndSign;
 }
 
+// 如有一个用户都没有，则添加一个
+async function addOne() {
+  const url = "/admin/defaultSignUp";
+  return await myAxios().post(url);
+}
+
 // 获取验证码
 /* async function getCaptcha() {
   const url = "/captcha";
@@ -85,6 +91,7 @@ export {
   whoAmIService,
   changePwd,
   changeIntroduce,
-  changeNickAndSign
+  changeNickAndSign,
+  addOne
   // getCaptcha
 };

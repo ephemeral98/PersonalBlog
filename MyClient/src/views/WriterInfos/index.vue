@@ -40,13 +40,23 @@
         <li>
           <div class="name">昵称</div>
           <div class="val">
-            <input type="text" class="nick_name" v-model="nickName" />
+            <input
+              type="text"
+              class="nick_name"
+              v-model="nickName"
+              maxlength="12"
+            />
           </div>
         </li>
         <li>
           <div class="name">个性签名</div>
           <div class="val">
-            <input type="text" class="signature" v-model="signature" />
+            <input
+              type="text"
+              class="signature"
+              v-model="signature"
+              maxlength="30"
+            />
           </div>
         </li>
         <li>
@@ -105,8 +115,8 @@ export default {
     async changeAvatar(e) {
       console.log(e.target.files);
       const fData = new FormData();
-      fData.append("portrait", e.target.files[0], e.target.files[0].name);
-      const resp = await uploadHttp.upPortrait(fData);
+      fData.append("singleImg", e.target.files[0], e.target.files[0].name);
+      const resp = await uploadHttp.upSingle(fData);
       if (resp.data.status === "success") {
         // 成功弹窗
         this.succMsg = true;

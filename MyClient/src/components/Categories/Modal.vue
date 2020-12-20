@@ -14,7 +14,12 @@
         <div class="title">请输入分类名字</div>
       </template>
       <template #content>
-        <textarea name="" class="kindName" v-model="newKindContent"></textarea>
+        <textarea
+          name=""
+          class="kindName"
+          v-model="newKindContent"
+          maxlength="20"
+        ></textarea>
       </template>
       <template #controlBtn>
         <button class="confirm_btn" @click="confirmSubmit(newKindContent)">
@@ -51,6 +56,7 @@
             type="text"
             placeholder="new name"
             v-model="newKindName"
+            maxlength="20"
           />
         </p>
       </template>

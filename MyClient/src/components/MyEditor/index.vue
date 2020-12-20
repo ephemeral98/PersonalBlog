@@ -1,24 +1,30 @@
 <template>
   <div class="write">
-    <!-- 发布按钮 -->
-    <button class="declare" @click="submit">更新发布</button>
-
-    <!--使用了v-if 其实会导致一个小bug，第一次渲染该组件的时候，没有过度动画，但是优点大于缺点 -->
     <Modal
-      v-if="showModal"
+      v-show="showModal"
       :showDeclareModal="showDeclareModal"
-      :updateConfig="updateConfig"
       @show-declaremodal="showDeclareModal = false"
       :illegalConfig="failMsg"
       @accept-illeagal="failMsg = $event"
+      :updateConfig="updateConfig"
+      :uploadConfig="uploadConfig"
+      @show-uploadmodal="uploadConfig.isShow = false"
     />
 
-    <!-- 分类选项 -->
-    <select id="categories" v-model="pickKind">
-      <option :value="kind.id" v-for="kind in category" :key="kind.id">
-        {{ kind.name }}
-      </option>
-    </select>
+    <div class="panel">
+      <button class="up_img" @click="uploadConfig.isShow = true">
+        上传图片
+      </button>
+      <!-- 分类选项 -->
+      <select id="categories" v-model="pickKind">
+        <option :value="kind.id" v-for="kind in category" :key="kind.id">
+          {{ kind.name }}
+        </option>
+      </select>
+
+      <!-- 发布按钮 -->
+      <button class="declare" @click="submit">更新发布</button>
+    </div>
 
     <!-- <button class="home_btn" @click="goHome">回到首页</button> -->
 
@@ -34,44 +40,31 @@
 import E from "wangeditor";
 import * as categoryService from "../../service/CategoryService.js";
 import Modal from "./Modal.vue";
+import { mapState } from "vuex";
+
 export default {
-  props: ["artcleInfos"],
   components: {
     Modal
   },
 
   data() {
     return {
-      showModal: false,
-      title: null,
+      temp: false,
+      title: "",
+      updateConfig: {},
+      showModal: true,
       editor: null,
-      introduce: "无",
       showDeclareModal: false,
       pickKind: 1,
       category: [],
-      updateConfig: {},
-      failMsg: ""
+      failMsg: "",
+      uploadConfig: {
+        isShow: false
+      }
     };
   },
   computed: {
-    typeNum() {
-      return 123;
-    }
-  },
-  watch: {
-    artcleInfos(val) {
-      const { id, title, content, CategoryId, introduce } = val;
-      this.id = id;
-      this.title = title;
-      this.editor.txt.html(content);
-      this.introduce = introduce; // 文章的介绍，要给弹窗处理
-      this.pickKind = CategoryId; // 修改文章页面 初始化时
-    },
-    introduce: {
-      handler() {
-        this.updateConfig.introduceContent = this.introduce;
-      }
-    }
+    ...mapState("articleStore", ["articleDetail"])
   },
   methods: {
     // 计算字数
@@ -85,7 +78,6 @@ export default {
       return count;
     },
     submit() {
-      console.log(this.pickKind);
       const wordsNum = this.calcWords();
       this.showModal = true;
       // 标题不能为空，且不能超过20个字符
@@ -98,10 +90,8 @@ export default {
       } else {
         // 在这里将数据传给Modal, 再在Modal统一去发送请求：updateConfig
         this.updateConfig = {
-          id: this.id,
           title: this.title,
           content: this.editor.txt.html(),
-          introduceContent: this.introduce,
           CategoryId: this.pickKind,
           wordsNum
         };
@@ -113,24 +103,25 @@ export default {
       this.$router.push("/");
     }
   },
+  watch: {
+    articleDetail() {
+      this.editor.txt.html(
+        this.articleDetail ? this.articleDetail.content : ""
+      );
+      this.title = this.articleDetail ? this.articleDetail.title : "";
+    }
+  },
 
   async created() {
-    this.updateConfig.id = this.$route.params.id; // 获取文章的id
-
-    // 获取所有文章分类名字
-    /* const categories = await categoryService.getAllCategory();
-    console.log(categories);
-    categories.forEach(kind => {
-      this.category.push(kind.name);
-    }); */
-    // this.category.unshift("请选择分类");
-
     // 如果没值，默认选中第一个分类的
     this.category = await categoryService.getAllCategory();
-    this.pickKind = this.pickKind || this.category[0].id;
+    this.pickKind =
+      (this.articleDetail && this.articleDetail.CategoryId) ||
+      this.category[0].id;
   },
 
   mounted() {
+    console.log(this.articleDetail);
     this.editor = new E("#toolbar-container", "#text-container"); // 传入两个元素
     this.editor.create();
   }
@@ -145,46 +136,46 @@ export default {
   background-color: #d9d9d9;
   position: relative;
 
-  // 字数
-  .typeNum {
+  .panel {
     position: absolute;
-    right: 23%;
-    width: 70px;
+    right: 2px;
+    top: 0;
+    width: 450px;
     height: 42px;
-    background-color: #efefef;
-    border-radius: 8px;
-    text-align: center;
-    line-height: 45px;
-    font-size: 15px;
-    border: none;
+    display: flex;
+    justify-content: space-around;
+
+    .up_img {
+      padding: 0 10px;
+      @include upload_btn(up_art_img);
+      background-color: lighten($gray, 10%);
+    }
   }
 
   // 分类选项
   #categories {
     width: 156px;
-    height: 42px;
     background-color: #efefef;
-    position: absolute;
-    top: 0;
-    left: 80%;
+    // position: absolute;
+    // top: 0;
+    // left: 80%;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-size: 15px;
     z-index: 2;
 
-    > option:nth-child(1) {
-      // 隐藏默认选项
-      display: none;
+    > option {
+      &:nth-child(1) {
+        // 隐藏默认选项
+        display: none;
+      }
     }
   }
 
   // 发布按钮
   .declare {
     width: 100px;
-    height: 42px;
-    position: absolute;
-    right: 1%;
     line-height: 45px;
     color: rgb(77, 76, 76);
     font-size: 18px;

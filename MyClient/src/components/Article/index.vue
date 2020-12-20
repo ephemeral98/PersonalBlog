@@ -41,12 +41,6 @@ export default {
   components: {
     Modal
   },
-  /* beforeCreate() {
-    const { kindName } = this.$route.params;
-    if (kindName) {
-      localStorage.setItem("pickKind", kindName);
-    }
-  }, */
   async created() {
     const id = this.$route.params.id;
     // 发送请求 获取该分类的文章
@@ -105,9 +99,10 @@ export default {
     display: flex;
 
     .title {
-      width: 150px;
+      min-width: 150px;
+      max-width: 600px;
       height: 100%;
-      //   background-color: gold;
+      @include singleOverHidden;
       font-size: 25px;
       @include flexCenter;
       margin-right: 100px;

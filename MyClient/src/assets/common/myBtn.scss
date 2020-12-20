@@ -29,17 +29,18 @@
   }
 }
 
-@mixin upload_btn($fileClass, $width:100px, $height:40px, $color:$my_blue, $hColor:$my_pink) {
+@mixin upload_btn($fileClass, $width:100px, $height:42px, $color:$my_blue, $hColor:$my_pink) {
   position: relative;
   width: $width;
   height: $height;
   background-color: $color;
   display: block;
-  line-height: 40px;
+  line-height: $height;
   text-align: center;
   border-radius: 20px;
   font-size: 15px;
   overflow: hidden;
+  transition: all 0.5s;
 
   &:hover {
     background-color: $hColor;
@@ -55,5 +56,6 @@
     left: 0;
     top: 0;
     overflow: hidden;
+    font-size: 0;
   }
 }

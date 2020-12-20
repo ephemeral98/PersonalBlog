@@ -11,6 +11,7 @@ export default {
       state.data = payload;
     },
     setArticleDetail(state, payload) {
+      console.log(state);
       state.articleDetail = payload;
     }
   },
@@ -20,10 +21,11 @@ export default {
       const resp = await ArticleHttp.findAllArticles(kindName);
       commit("setData", resp);
     },
-    // 根据标题查询文章
-    async getArtsByTitle({ commit }, category, cap) {
-      const resp = await ArticleHttp.findArticleByTitle(category, cap);
+    // 根据id查询文章
+    async getArtById({ commit }, id) {
+      const resp = await ArticleHttp.findAticleById(id);
+      console.log(resp);
       commit("setArticleDetail", resp);
     }
   }
-}
+};

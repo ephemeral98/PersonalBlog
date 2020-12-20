@@ -28,19 +28,45 @@
 import { mapState } from "vuex";
 
 export default {
-  props: {
-    articleDetailInfo: {
-      type: Object
-    }
-  },
+  data: () => ({
+    /* articleDetailInfo: {
+      wordNum: { name: "字数", val: 0 },
+      readNum: { name: "阅读数", val: 0 },
+      likeNum: { name: "点赞数", val: 0 },
+      commentNum: { name: "评论数", val: null }
+    } */
+  }),
   computed: {
     ...mapState("commentStore", ["floorsData", "floorsCount", "commentsCount"]),
+    ...mapState("articleStore", ["articleDetail"]),
     articleId() {
+      // console.log(this.$store);
       return this.$route.params.id;
+    },
+    articleDetailInfo() {
+      return {
+        wordNum: {
+          name: "字数",
+          val: this.articleDetail ? this.articleDetail.wordsNum : ""
+        },
+        readNum: {
+          name: "阅读数",
+          val: this.articleDetail ? this.articleDetail.readNum : ""
+        },
+        likeNum: {
+          name: "点赞数",
+          val: this.articleDetail ? this.articleDetail.likeNum : ""
+        },
+        commentNum: { name: "评论数", val: null }
+      };
     }
   },
-  created() {
-    this.$store.dispatch("commentStore/getMoreComments", [1, 5, 2]); // temp: +id
+  mounted() {
+    this.$store.dispatch("commentStore/getMoreComments", [
+      1,
+      5,
+      this.articleId
+    ]); // temp: +id
   }
 };
 </script>

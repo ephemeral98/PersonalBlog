@@ -140,7 +140,9 @@ export default {
   }
 
   > li {
-    width: 230px;
+    min-width: 230px;
+    max-width: 400px;
+    @include singleOverHidden;
     height: 80px;
     background-color: $my_blue;
     font-size: 30px;
@@ -151,6 +153,7 @@ export default {
     margin: 10px;
     text-align: center;
     position: relative;
+    padding: 0 5px;
 
     &.unselected {
       background-color: $my_pink;

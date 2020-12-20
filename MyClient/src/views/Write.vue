@@ -48,7 +48,7 @@ export default {
   height: 100%;
 
   .home {
-    background-color: rgba($my_blue, 50%);
+    background-color: rgba($gray, 5%);
     display: block;
     padding: 5px;
     position: fixed;
