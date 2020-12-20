@@ -4,8 +4,7 @@
     class="row article"
     :class="queue % 2 === 0 ? 'que' : 'reQue'"
   >
-    <v-flex class="place_img" sm5>
-      <img src="../../assets/img/portrait.png" alt="" />
+    <v-flex class="place_img" sm5 :style="`background-image:${art.face}`">
     </v-flex>
     <v-flex
       class="art_info d-flex justify-center flex-column pl-2 pl-sm-10 pr-2 pr-sm-10"
@@ -14,7 +13,7 @@
       <div class="art_title">{{ art.title }}</div>
       <div>
         <span class="iconfont icon-rili"
-          >{{ art.year }}-{{ art.month }}-{{ art.date }}</span
+          >{{ art.date }}.{{ art.month }}.{{ art.year }}</span
         >
         |
         <span class="iconfont icon-ziyuan">{{
@@ -67,14 +66,11 @@ export default {
 }
 
 .place_img {
+  border: solid 2px red;
   width: 100%;
-  height: 100%;
+  height: 20vw;
   overflow: hidden;
-}
-
-img {
-  width: 100%;
-  // height: 100%;
+  background-size: cover;
 }
 
 // 手机屏

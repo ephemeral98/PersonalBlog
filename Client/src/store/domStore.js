@@ -3,7 +3,8 @@ export default {
   state: {
     mask: false,
     isShowMenu: false,
-    navList: null
+    navList: null,
+    isPlayMusic: false
   },
   mutations: {
     showMenu(state, payload) {

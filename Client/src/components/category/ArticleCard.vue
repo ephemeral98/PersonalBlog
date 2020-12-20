@@ -2,12 +2,19 @@
   <router-link
     :to="{ name: 'article', params: { articleId: article.id } }"
     class="card hang"
+    :style="
+      showColor
+        ? 'background-color:skyblue'
+        : `background-image:url(${article.face})`
+    "
+    @mouseenter.native="showColor = true"
+    @mouseleave.native="showColor = false"
   >
     <!-- <img src="../../assets/img/luna7.png" alt="" ref="preImg" /> -->
     <div class="infos">
       <div class="title">{{ article.title }}</div>
       <div class="content mt-sm-3">
-        {{ article.year }}-{{ article.month }}-{{ article.date }} ·
+        {{ article.date }}/{{ article.month }}/{{ article.year }} ·
         {{ article.Category.name }}
       </div>
     </div>
@@ -17,6 +24,9 @@
 <script>
 export default {
   props: ["article"],
+  data: () => ({
+    showColor: false
+  }),
   mounted() {
     /* const layoutImg = this.$refs.preImg; // 当图片加载完成的时候，设置一下尺寸
     layoutImg.addEventListener("load", () => {
@@ -56,7 +66,7 @@ export default {
   margin-top: 7vw;
   overflow: hidden;
   position: relative;
-  background-image: url(../../assets/img/luna7.png);
+  // background-image: url(../../assets/img/myDesk.jpg);
   background-size: cover;
   animation: sway 0.8s ease-in-out infinite alternate;
   transform-origin: top left;

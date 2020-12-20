@@ -4,7 +4,10 @@
     <!-- 层主 -->
     <li class="owner">
       <div class="avatar">
-        <img src="../../assets/img/portrait.png" alt="" />
+        <img
+          :src="floor.tag === '0' ? blogOwnerAvatar : visitor + Math.random()"
+          alt=""
+        />
       </div>
       <div class="creed">
         <div class="name">
@@ -14,7 +17,7 @@
           }}</span>
         </div>
         <div class="time">
-          {{ floor.year }}-{{ floor.month }}-{{ floor.date }}
+          {{ floor.date }}.{{ floor.month }}.{{ floor.year }}
           {{ floor.hour }}:{{ floor.min }}:{{ floor.sec }}
         </div>
         <div class="content">
@@ -29,7 +32,13 @@
       <div class="reply_item" v-for="re in floor.reply" :key="re.id">
         <li class="replyer">
           <div class="avatar">
-            <img src="../../assets/img/portrait.png" alt="" class="avatar" />
+            <img
+              :src="
+                floor.tag === '0' ? blogOwnerAvatar : visitor + Math.random()
+              "
+              alt=""
+              class="avatar"
+            />
           </div>
           <div class="creed">
             <div class="name">
@@ -39,7 +48,7 @@
               }}</span>
             </div>
             <div class="time">
-              {{ re.year }}-{{ re.month }}-{{ re.date }} {{ floor.hour }}:{{
+              {{ re.date }}.{{ re.month }}.{{ re.year }} {{ floor.hour }}:{{
                 floor.min
               }}:{{ floor.sec }}
             </div>
@@ -53,8 +62,13 @@
 </template>
 
 <script>
+import avatar from "@/assets/img/portrait.png";
 export default {
   props: ["floor"],
+  data: () => ({
+    blogOwnerAvatar: avatar,
+    visitor: "http://api.rosysun.cn/sjtx/?type=2&"
+  }),
   methods: {
     toReply(e) {
       // 拿到楼层，昵称，--> vuex

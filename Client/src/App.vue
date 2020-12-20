@@ -7,7 +7,11 @@
     >
       <BgMusic :notTopBar="isBegin" v-show="isShowMusic" />
     </transition>
+
+    <TopBar v-if="isBegin" @hideMusic="isShowMusic = $event" />
+    <!-- <transition leave-active-class="my_disapper"> -->
     <router-view @touchmove.prevent @mousewheel.prevent />
+    <!-- </transition> -->
   </v-app>
 </template>
 

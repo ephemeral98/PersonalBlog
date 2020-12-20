@@ -15,11 +15,22 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   props: ["notTopBar"],
   data: () => ({
     playingMusic: false
   }),
+  computed: {
+    ...mapState("domStore", ["isPlayMusic"])
+  },
+  watch: {
+    isPlayMusic(val) {
+      if (val) {
+        this.playMusic();
+      }
+    }
+  },
   methods: {
     playMusic() {
       const music = this.$refs.music;
@@ -47,7 +58,7 @@ export default {
   position: fixed;
   left: 60px;
   top: 20px;
-  z-index: 99999;
+  z-index: 999999;
 }
 
 .not_top_bar {

@@ -14,7 +14,9 @@ export default {};
 .comp_head {
   width: 100vw;
   height: 56vh;
-  background-image: url(../../assets/img/luna7.png);
+  background-image: url(../../assets/img/myDesk.jpg);
+  background-size: cover;
+  background-position: 38% 35%;
   position: relative;
 
   .comp_head_center {

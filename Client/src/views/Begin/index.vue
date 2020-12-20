@@ -8,7 +8,7 @@
       <v-row justify="center" class="introduce" ref="typeContent"></v-row>
     </CentralWord>
     <router-link :to="{ name: 'articleList' }">
-      <BlinkBtn class="start_btn">Start</BlinkBtn>
+      <BlinkBtn class="start_btn" @click.native="playMusic">Start</BlinkBtn>
     </router-link>
     <!-- <BgMusic :notTopBar="true" /> -->
   </div>
@@ -63,6 +63,9 @@ export default {
       }
       // 下次重绘之前调用回调函数更新动画
       requestAnimationFrame(this.animate);
+    },
+    playMusic() {
+      this.$store.state.domStore.isPlayMusic = true;
     }
   },
   async created() {

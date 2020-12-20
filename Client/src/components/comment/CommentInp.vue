@@ -1,6 +1,6 @@
 <template>
   <div class="comment_inp">
-    <v-row class="title">评论</v-row>
+    <v-row class="my_title iconfont">评论 &#xe658;</v-row>
     <v-row>
       <textarea
         name=""
@@ -132,6 +132,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.my_title {
+  font-size: 1.3rem;
+}
 textarea,
 input {
   padding: 1vw 1vw;
