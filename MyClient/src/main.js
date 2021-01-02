@@ -2,7 +2,9 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-console.log(process.env.NODE_ENV);
+// import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+// Vue.use(BootstrapVue);
+// Vue.use(IconsPlugin);
 // bootstrap-vue 和 animate 在生产环境用cdn加速
 if (process.env.NODE_ENV !== "production") {
   import("bootstrap-vue").then(ele => {

@@ -6,11 +6,11 @@ import myAxios from "./Request.js";
  * @param {string} loginId
  * @param {string} password
  */
-async function loginService(loginId, password, captcha) {
+async function loginService(loginId, password) {
   const loginServ = await myAxios().post("/admin/login", {
     loginId,
-    password,
-    captcha
+    password
+    // captcha
   });
   return loginServ.data;
 }

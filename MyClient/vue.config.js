@@ -1,5 +1,5 @@
-// 后台管理模块 导出到公共地方
 const path = require("path");
+// const CompressionPlugin = require("compression-webpack-plugin");
 // const resolve = dir => path.join(__dirname, dir);
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -15,6 +15,7 @@ const cdn = {
   css: [
     "https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.compat.min.css",
     "https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.min.css",
+    "https://cdn.bootcdn.net/ajax/libs/bootstrap-vue/2.21.0/bootstrap-vue.min.css",
     "https://unpkg.com/bootstrap/dist/css/bootstrap.min.css",
     "https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css"
   ],
@@ -46,8 +47,7 @@ module.exports = {
       extensions: [".js", ".json", ".vue"],
       alias: {
         vue: "vue/dist/vue.js",
-        "@": path.resolve(__dirname, "./src"),
-        "@up": path.resolve(__dirname, "./upload")
+        "@": path.resolve(__dirname, "./src")
       }
     };
 
@@ -56,7 +56,7 @@ module.exports = {
       config.mode = "production";
       config.externals = cdn.externals;
 
-      // 公共代码抽离(分包策略)
+      // 分包策略(公共代码抽离)
       config.optimization.splitChunks.cacheGroups = {
         vendor: {
           chunks: "all",
@@ -92,6 +92,19 @@ module.exports = {
         drop_debugger: false,
         pure_funcs: ["console.log"]
       }; // 移除console
+
+      /* config.plugins.push(
+        new CompressionPlugin({
+          filename: "[path].gz[query]",
+          //压缩算法
+          algorithm: "gzip",
+          //匹配文件
+          test: /\.js$|\.css$|\.html$|\.woff$|\.ttf$|\.eot$|/,
+          minRatio: 0.8,
+          //删除原始文件只保留压缩后的文件
+          deleteOriginalAssets: isProduction
+        })
+      ); */
     }
   },
 
@@ -106,21 +119,10 @@ module.exports = {
   devServer: {
     proxy: {
       "/api": {
-        target: "http://localhost:4399"
+        target: "http://localhost:2333"
       }
     }
   },
   outputDir: path.resolve(__dirname, "../public/MyClient"),
   publicPath: "/MyClient/"
-
-  // build: {
-  // index:path.resolve(__dirname, "../public/MyClient/index.html"),
-  // assetsRoot: path.resolve(__dirname, "../public/MyClient"),
-  // assetsSubDirectory:'static',
-  // assetsPublicPath: './',
-  // productionSourceMap:true,
-  // },
-  /* assetsDir: process.env.NODE_ENV === 'production'
-  ? path.resolve(__dirname, "../public/MyClient/assets")
-  : '/assets', */
 };

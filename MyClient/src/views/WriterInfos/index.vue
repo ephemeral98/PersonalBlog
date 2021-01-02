@@ -17,7 +17,7 @@
     <div class="main">
       <div class="change_portrait">
         <div class="avatar">
-          <img src="../../assets/img/portrait.png" alt="" />
+          <img src="http://qm23h04eq.hn-bkt.clouddn.com/portrait.png" alt="" />
         </div>
         <a href="javascript:void(0)" class="ava_change">
           更换头像

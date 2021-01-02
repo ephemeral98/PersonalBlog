@@ -5,7 +5,7 @@
     <!-- 层主 -->
     <li class="owner">
       <div class="avatar">
-        <img src="../../assets/img/portrait.png" alt="" />
+        <img :src="floor.tag === '0' ? blogOwner : visitor" alt="" />
       </div>
       <div class="creed">
         <div class="name">
@@ -31,7 +31,11 @@
       <div class="reply_item" v-for="re in floor.reply" :key="re.id">
         <li class="replyer">
           <div class="avatar">
-            <img src="../../assets/img/portrait.png" alt="" class="avatar" />
+            <img
+              :src="re.tag === '0' ? blogOwner : visitor"
+              alt=""
+              class="avatar"
+            />
           </div>
           <div class="creed">
             <div class="name">
@@ -60,6 +64,8 @@
 export default {
   props: ["floor"],
   data: () => ({
+    blogOwner: "http://qm23h04eq.hn-bkt.clouddn.com/portrait.png",
+    visitor: "http://qm23h04eq.hn-bkt.clouddn.com/visitor.jpg",
     dismissCountDown: 0,
     alertConfig: {
       statusWord: "无",

@@ -8,7 +8,8 @@ import limitLocalStorage from "../utils/limitLocalStorage.js";
 const myStorage = new limitLocalStorage();
 
 export default () => {
-  axios.defaults.baseURL = "http://localhost:4399";
+  axios.defaults.baseURL = "http://localhost:2333";
+  axios.defaults.withCredentials = false;
   let instance = axios; // 保存一下axios先
   /* if (token) {
     instance = axios.create({
@@ -62,5 +63,4 @@ export default () => {
     }
   );
   return instance;
-
 };

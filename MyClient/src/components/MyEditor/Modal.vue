@@ -78,7 +78,7 @@
       key="failModal"
     >
       <template v-slot:title>
-        <div class="title">发布失败</div>
+        <div class="title">失败消息：</div>
       </template>
       <template v-slot:content>
         <div class="content">{{ statusMsg || "失败" }}</div>
@@ -95,7 +95,7 @@ import MyModal from "../tools/MyModal";
 import * as articleHttp from "@/service/ArticleService.js";
 import * as uploadHttp from "@/service/UploadService.js";
 import { mapState } from "vuex";
-import fplaceHolerImg from "@/assets/img/portrait.png";
+// import fplaceHolerImg from "@/assets/img/portrait.png";
 export default {
   props: [
     "showDeclareModal",
@@ -136,57 +136,88 @@ export default {
         modalStyle: {
           boxShadow: "0 0 20px red"
         }
-      }
+      },
+      imageUrl: "",
+      //这是根据你创建空间时所选择的地区
+      domain: "http://upload-z2.qiniup.com",
+      // 这是七牛云空间的外链默认域名
+      qiniuaddr: "http://qm23h04eq.hn-bkt.clouddn.com"
     };
   },
   computed: {
     ...mapState("articleStore", ["articleDetail"]),
     uploadImg() {
-      return (this.articleDetail && this.articleDetail.face) || fplaceHolerImg;
+      return (
+        (this.articleDetail && this.articleDetail.face) ||
+        "http://qm23h04eq.hn-bkt.clouddn.com/portrait.png"
+      );
     },
     articleId() {
       return this.$route.params.id;
     }
   },
   methods: {
-    changeUpload(e) {
-      console.log(e.target.files[0]);
-      this.newUploadImg = e.target.files;
-      this.pickedName = e.target.files[0].name;
-      // 图片预览
-      const f = e.target.files[0];
-      const src = window.URL.createObjectURL(f);
-      console.log(src);
-      console.log(this.$refs.upImg);
-      this.$refs.upImg.src = src;
+    // 上传文件到七牛云
+    async upqiniu(file) {
+      if (!file) {
+        return "";
+      }
+      const config = {
+        headers: { "Content-Type": "multipart/form-data" }
+      };
+      let filetype = "";
+      if (file.type === "image/png") {
+        filetype = "png";
+      } else {
+        filetype = "jpg";
+      }
+      // 重命名要上传的文件
+      const keyName =
+        "artPlace" +
+        Date.parse(new Date()) +
+        Math.floor(Math.random() * 100) +
+        "." +
+        filetype;
+
+      const params = {
+        domain: this.domain,
+        qiniuaddr: this.qiniuaddr
+      };
+
+      // 七牛云的外链
+      return await uploadHttp.upQiniu(file, keyName, config, params);
+    },
+    // 验证文件合法性
+    beforeUpload(file) {
+      const islegalType =
+        file.type === "image/jpeg" || file.type === "image/png";
+      const isLt8M = file.size / 1024 / 1024 < 8;
+      if (!islegalType) {
+        this.statusMsg = "图片只能是 JPG 或者 PNG 格式!";
+        this.failModal = true;
+      } else if (!isLt8M) {
+        this.statusMsg = "图片大小不能超过 8MB";
+        this.failModal = true;
+      }
+      return islegalType && isLt8M;
     },
 
-    async confirmUp(upImg) {
-      console.log(upImg);
-      const fData = new FormData();
-      fData.append("singleImg", upImg[0], upImg[0].name);
-      const resp = await uploadHttp.upSingle(fData);
-      console.log(resp);
-      if (resp.data.status === "success") {
-        // 把路径保存下来
-        // this.newUploadImg = resp.data.data;
-        // return require(`../../assets/logo.png`);
-        return resp.data.data;
+    changeUpload(e) {
+      this.newUploadImg = e.target.files[0];
+      const isPass = this.beforeUpload(this.newUploadImg);
+
+      if (isPass) {
+        // 图片预览
+        const f = e.target.files[0];
+        const src = window.URL.createObjectURL(f);
+        this.$refs.upImg.src = src;
       }
-      // 失败弹窗
-      this.failModal = true;
-      this.statusMsg = resp.data.msg;
     },
 
     // 更新发布
     async confirmSubmit(tex) {
-      // this.$emit("kind-name", e);
-      let src;
-      if (this.newUploadImg) {
-        // 先获取上传图片返回来的路径
-        src = await this.confirmUp(this.newUploadImg);
-        console.log(src);
-      }
+      const src = await this.upqiniu(this.newUploadImg);
+      // 先获取上传图片返回来的路径
       // 发送一个请求：发布or更新文章
       const {
         title,
@@ -205,10 +236,11 @@ export default {
         CategoryId,
         surface,
         wordsNum,
-        face: src || this.uploadImg
+        face: src
       });
       // 清空消息，关闭弹窗
       this.$emit("show-declaremodal", false);
+
       // 返回的消息
       this.statusMsg = res.data.msg;
       if (res.data.status === "success") {

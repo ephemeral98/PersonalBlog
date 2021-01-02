@@ -7,7 +7,7 @@
       @mouseleave="showMyInfo = false"
     >
       <div class="portrait">
-        <img src="../../assets/img/portrait.png" alt="" />
+        <img src="http://qm23h04eq.hn-bkt.clouddn.com/portrait.png" alt="" />
       </div>
       <transition
         enter-active-class="animate__animated animate__zoomInDown"
@@ -15,7 +15,10 @@
       >
         <div class="infos" v-if="showMyInfo">
           <div class="myPortrait">
-            <img src="../../assets/img/portrait.png" alt="" />
+            <img
+              src="http://qm23h04eq.hn-bkt.clouddn.com/portrait.png"
+              alt=""
+            />
           </div>
           <div class="name">{{ nickName }}</div>
           <ul class="tools">

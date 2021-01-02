@@ -7,7 +7,10 @@
       <div class="leftNav">
         <div class="myInfo">
           <div class="portrait">
-            <img src="../assets/img/portrait.png" alt="" />
+            <img
+              src="http://qm23h04eq.hn-bkt.clouddn.com/portrait.png"
+              alt=""
+            />
           </div>
           <div class="name">{{ nickName }}</div>
           <div class="signature">{{ signature }}</div>

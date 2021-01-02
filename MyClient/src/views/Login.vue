@@ -13,18 +13,18 @@
                 placeholder="password"
                 v-model="password"
               />
-              <input
+              <!-- <input
                 type="text"
                 placeholder="Verification code"
                 v-model="verCode"
-              />
-              <img
+              /> -->
+              <!-- <img
                 :src="captchaUrl"
                 alt=""
                 id="captcha"
                 @click="reflash"
                 ref="captchaImg"
-              />
+              /> -->
               <button @click="signIn">Sign In</button>
               <button v-b-modal.tips @click="$bvModal.show('bv-modal-signUp')">
                 Sign Up
@@ -54,28 +54,29 @@ export default {
       tips: "",
       captcha: null,
       verCode: "",
-      captchaUrl: `/captcha?${Math.random()}`
+      captchaUrl: `http://localhost:2333/captcha?${Math.random()}`
     };
   },
   methods: {
     showSignMsg(msg, callback) {
-      this.$bvModal
-        .msgBoxOk(msg, {
-          title: "来自管理员的友情提示：",
-          size: "sm",
-          buttonSize: "sm",
-          // okVariant: "success",
-          headerClass: "p-2 border-bottom-0",
-          footerClass: "p-2 border-top-0",
-          centered: true
-        })
-        .then(value => {
-          this.tips = value;
-          callback();
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.$bvModal &&
+        this.$bvModal
+          .msgBoxOk(msg, {
+            title: "来自管理员的友情提示：",
+            size: "sm",
+            buttonSize: "sm",
+            // okVariant: "success",
+            headerClass: "p-2 border-bottom-0",
+            footerClass: "p-2 border-top-0",
+            centered: true
+          })
+          .then(value => {
+            this.tips = value;
+            callback();
+          })
+          .catch(err => {
+            console.log(err);
+          });
     },
 
     async signIn() {
@@ -96,21 +97,21 @@ export default {
           });
         } else if (user.status === "fail") {
           this.showSignMsg("账号或者密码错误", () => {
-            this.reflash();
+            // this.reflash();
           });
-        } else if (user.status === 401) {
+        } /* else if (user.status === 401) {
           this.showSignMsg("验证码错误", () => {
             this.reflash();
           });
-        }
-      } catch {
-        console.log("路由不让进");
+        } */
+      } catch (err) {
+        console.log("路由不让进", err);
       }
-    },
-
-    reflash() {
-      this.$refs.captchaImg.src = `/captcha?${Math.random()}`;
     }
+
+    /* reflash() {
+      this.$refs.captchaImg.src = `http://localhost:2333/captcha?${Math.random()}`;
+    } */
   },
 
   async created() {
@@ -126,7 +127,7 @@ export default {
 .login {
   width: 100%;
   height: 100%;
-  background-image: url(../assets/img/loginBg.jpg);
+  background-image: url(http://qm23h04eq.hn-bkt.clouddn.com/loginBg.jpg);
   background-size: cover;
 
   .main {

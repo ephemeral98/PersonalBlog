@@ -45,7 +45,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .writing {
-  height: 100%;
+  height: 100vh;
 
   .home {
     background-color: rgba($gray, 5%);

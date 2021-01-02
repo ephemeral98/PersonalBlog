@@ -30,7 +30,7 @@
 
     <div id="toolbar-container" class="toolbar"></div>
     <div class="editing">
-      <input type="text" class="title" v-model="title" />
+      <input type="text" class="title" v-model="title" maxlength="30" />
       <div id="text-container" class="text"></div>
     </div>
   </div>
@@ -38,7 +38,9 @@
 
 <script>
 import E from "wangeditor";
-import * as categoryService from "../../service/CategoryService.js";
+import hljs from "highlight.js";
+import "highlight.js/styles/rainbow.css";
+import * as categoryService from "@/service/CategoryService.js";
 import Modal from "./Modal.vue";
 import { mapState } from "vuex";
 
@@ -123,6 +125,7 @@ export default {
   mounted() {
     console.log(this.articleDetail);
     this.editor = new E("#toolbar-container", "#text-container"); // 传入两个元素
+    this.editor.highlight = hljs;
     this.editor.create();
   }
 };
@@ -138,12 +141,13 @@ export default {
 
   .panel {
     position: absolute;
-    right: 2px;
+    right: 0;
     top: 0;
     width: 450px;
     height: 42px;
     display: flex;
     justify-content: space-around;
+    z-index: 99999;
 
     .up_img {
       padding: 0 10px;
@@ -202,8 +206,8 @@ export default {
   // 编辑区
   .editing {
     width: 800px;
-    height: 620px;
-    margin: 40px auto 10px;
+    height: 560px;
+    margin: 40px auto 0;
     overflow: auto;
     background-color: #fff;
 
@@ -230,6 +234,15 @@ export default {
 
   .enter-active {
     transition: 2s;
+  }
+
+  #text-container {
+    height: 490px;
+  }
+
+  .w-e-text {
+    height: 100%;
+    min-height: 0 !important;
   }
 }
 .toolbar {
