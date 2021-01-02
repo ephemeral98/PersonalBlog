@@ -14,7 +14,7 @@ export default {};
 .comp_head {
   width: 100vw;
   height: 56vh;
-  background-image: url(../../assets/img/myDesk.jpg);
+  background-image: url(http://qm23h04eq.hn-bkt.clouddn.com/loginBg.jpg);
   background-size: cover;
   background-position: 38% 35%;
   position: relative;

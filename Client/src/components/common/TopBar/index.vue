@@ -11,14 +11,17 @@
       <v-container fluid>
         <v-row>
           <!-- 我的名字or头像logo & 背景音乐 -->
-          <div class="left col-3 d-flex justify-start">
+          <div class="left col-3 col-sm-3 col-md-1 d-flex">
             <router-link to="/" class="me">
-              <img src="../../../assets/img/portrait.png" alt="" />
+              <img
+                src="http://qm23h04eq.hn-bkt.clouddn.com/portrait.png"
+                alt=""
+              />
             </router-link>
             <!-- <BgMusic class="d-flex align-center" style="padding: 0" /> -->
           </div>
           <!-- 导航栏 -->
-          <NavBar :navList="navList" class="col-9" />
+          <NavBar :navList="navList" class="col-sm-9 col-md-11" />
         </v-row>
       </v-container>
 
@@ -144,8 +147,9 @@ export default {
   }
 
   .left {
+    margin-left: -12px !important;
     height: 100%;
-    padding: 5px;
+    padding-left: 30px !important;
 
     .me {
       // width: 100%;

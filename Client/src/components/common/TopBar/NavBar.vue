@@ -93,7 +93,7 @@ export default {
   .menu {
     width: 10vw;
     position: absolute;
-    right: 3vw;
+    right: 2vw;
     top: 50%;
     transform: translateY(-50%);
     text-align: center;

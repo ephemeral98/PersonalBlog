@@ -4,7 +4,8 @@
     class="row article"
     :class="queue % 2 === 0 ? 'que' : 'reQue'"
   >
-    <v-flex class="place_img" sm5 :style="`background-image:${art.face}`">
+    <v-flex class="place_img" sm5>
+      <img :src="art.face" alt="" />
     </v-flex>
     <v-flex
       class="art_info d-flex justify-center flex-column pl-2 pl-sm-10 pr-2 pr-sm-10"
@@ -66,11 +67,14 @@ export default {
 }
 
 .place_img {
-  border: solid 2px red;
   width: 100%;
-  height: 20vw;
-  overflow: hidden;
-  background-size: cover;
+  height: 23vw;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 // 手机屏

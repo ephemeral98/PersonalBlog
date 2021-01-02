@@ -66,10 +66,12 @@ export default {
   margin-top: 7vw;
   overflow: hidden;
   position: relative;
+  transition: all 1s;
   // background-image: url(../../assets/img/myDesk.jpg);
   background-size: cover;
   animation: sway 0.8s ease-in-out infinite alternate;
   transform-origin: top left;
+  border: solid 1px $gray;
 
   .infos {
     position: absolute;

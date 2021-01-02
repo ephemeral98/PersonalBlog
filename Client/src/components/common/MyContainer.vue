@@ -1,12 +1,12 @@
 <template>
   <v-container class="my_container mt-15">
     <v-layout>
-      <v-flex xs12 sm9_5 md9_5 lg9_5 xl9_5>
+      <v-flex xs12 sm9_5 md9_5 lg9_5 xl9_5 mb-7>
         <!-- 主要内容放在这 -->
         <slot></slot>
       </v-flex>
       <v-flex class="d-sm-flex flex-column tips" xs12 sm2_5 md2_5 lg2_5 xl2_5>
-        <MyCard />
+        <MyCard class="my_card" />
         <div class="declare mt-5">
           <div class="my_title iconfont">公告&#xec40;</div>
           <div class="content">
@@ -52,6 +52,10 @@ export default {
         color: $my_pink;
         font-size: 1.3rem;
       }
+    }
+
+    .my_card {
+      @extend .declare;
     }
   }
 }

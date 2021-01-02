@@ -29,7 +29,7 @@ export default {
   padding-top: 0;
 
   .art_item {
-    margin: 2.3vh 0;
+    margin: 2.3vh 0 !important;
 
     &:first-child {
       margin-top: 0;

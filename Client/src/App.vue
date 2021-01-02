@@ -1,17 +1,20 @@
 <template>
   <v-app>
-    <TopBar v-if="isBegin" @hideMusic="isShowMusic = $event" />
+    <TopBar v-show="isBegin" @hideMusic="isShowMusic = $event" />
     <transition
       enter-active-class="animate__animated animate__fadeInDown"
       leave-active-class="animate__animated animate__fadeOutUp"
     >
-      <BgMusic :notTopBar="isBegin" v-show="isShowMusic" />
+      <BgMusic
+        @click.native="playMusic"
+        :notTopBar="isBegin"
+        v-show="isShowMusic"
+      />
     </transition>
 
-    <TopBar v-if="isBegin" @hideMusic="isShowMusic = $event" />
-    <!-- <transition leave-active-class="my_disapper"> -->
-    <router-view @touchmove.prevent @mousewheel.prevent />
-    <!-- </transition> -->
+    <transition name="fade" mode="out-in">
+      <router-view @touchmove.prevent @mousewheel.prevent />
+    </transition>
   </v-app>
 </template>
 
@@ -32,6 +35,30 @@ export default {
     isBegin() {
       return this.$route.name !== "begin";
     }
+  },
+  methods: {
+    playMusic() {
+      console.log("hello, mu");
+      this.$store.state.domStore.isPlayMusic = !this.$store.state.domStore
+        .isPlayMusic;
+    }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.fade-leave-active {
+  transform-origin: center;
+  transition: all 0.5s ease-out;
+  opacity: 0;
+  transform: scale(1.5, 1.5);
+}
+.fade-enter-active {
+  transform-origin: center center;
+  transition: all 0.2s ease-out;
+}
+.fade-enter {
+  opacity: 0;
+  // transform: scale(1, 1);
+}
+</style>

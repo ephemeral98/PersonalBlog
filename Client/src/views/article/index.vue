@@ -1,7 +1,7 @@
 <template>
   <div class="article">
     <CompHead>
-      <div>{{ artInfo.title || "标题" }}</div>
+      <div class="art_title">{{ artInfo.title || "标题" }}</div>
       <div class="art_info d-flex justify-center">
         <div class="d-flex justify-center flex-wrap">
           <div>
@@ -19,7 +19,10 @@
             &#xe658; <span>{{ floorsCount || 0 }}</span>
           </div>
           <div class="iconfont">
-            &#xe61a; <span>{{ artInfo.likeNum || 0 }}</span>
+            &#xe61a;
+            <span>{{
+              (gotLike ? artInfo.likeNum + 1 : artInfo.likeNum) || 0
+            }}</span>
           </div>
         </div>
       </div>
@@ -69,6 +72,7 @@ export default {
   }),
   computed: {
     ...mapState("commentStore", ["floorsCount"]),
+    ...mapState("articleStore", ["gotLike"]),
     articleId() {
       return this.$route.params.articleId;
     }
@@ -80,6 +84,9 @@ export default {
         return;
       }
       console.log("like", this.articleId);
+      console.log(this.$store.state.articleStore);
+      this.$store.state.articleStore.gotLike = true;
+      console.log(this.$store.state.articleStore);
       const resp = await articleHttp.addLike(this.articleId);
       // console.log(resp);
       if (resp) {
@@ -115,6 +122,9 @@ export default {
   },
   mounted() {
     window.scrollTo(0, 0);
+  },
+  beforeDestroy() {
+    this.$store.state.articleStore.gotLike = false;
   }
 };
 </script>
@@ -125,6 +135,11 @@ export default {
     border-radius: 10px;
   }
 }
+
+.art_title {
+  font-size: 3vw;
+}
+
 .art_info {
   width: 100vw;
   > div {
@@ -171,5 +186,11 @@ export default {
   border: dashed 2px $my_pink;
   border-radius: 50%;
   padding: 7px;
+}
+
+@media screen and (max-width: 600px) {
+  .art_title {
+    font-size: 8vw;
+  }
 }
 </style>

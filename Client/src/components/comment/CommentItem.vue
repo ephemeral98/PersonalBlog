@@ -62,11 +62,10 @@
 </template>
 
 <script>
-import avatar from "@/assets/img/portrait.png";
 export default {
   props: ["floor"],
   data: () => ({
-    blogOwnerAvatar: avatar,
+    blogOwnerAvatar: "http://qm23h04eq.hn-bkt.clouddn.com/portrait.png",
     visitor: "http://api.rosysun.cn/sjtx/?type=2&"
   }),
   methods: {

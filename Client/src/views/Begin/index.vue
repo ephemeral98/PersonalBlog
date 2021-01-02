@@ -1,7 +1,11 @@
 <template>
   <div id="sky" ref="sky">
     <canvas ref="cvs"></canvas>
-    <img src="../myView.png" alt="" class="buildingView" />
+    <img
+      src="http://qm23h04eq.hn-bkt.clouddn.com/myView.png"
+      alt=""
+      class="buildingView"
+    />
     <div class="filter"></div>
     <CentralWord class="central_word" welcomeWord="BA-Moment" :isBegin="true">
       <!-- 打字效果 -->
@@ -151,6 +155,15 @@ export default {
       #75517d 42%,
       #1b2947 75%
     );
+  }
+  .central_word {
+    @include center(absolute);
+    .flash {
+      font-size: 5vw !important;
+    }
+    .introduce {
+      font-size: 5vw !important;
+    }
   }
 }
 </style>

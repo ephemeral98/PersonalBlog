@@ -3,8 +3,7 @@
   width: 100vw;
   height: 100vh;
   position: relative;
-  @include ranbow; // 彩虹预加载
-  background-image: url(https://api.vvhan.com/api/view);
+  background-image: url(https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302) !important;
   background-size: cover;
   background-attachment: fixed;
 }
@@ -30,10 +29,16 @@
   z-index: 999999 !important;
   position: fixed;
   top: 0;
-  
+
   .bar {
     height: 5px !important;
     background-image: linear-gradient(to right, $my_blue, $my_pink, plum, lightyellow, skyblue, hotpink) !important;
     border-radius: 20px !important;
   }
 }
+
+.v-application code {
+  background-color: #b9b9b94d !important;
+  color: #656565 !important;
+}
+

@@ -66,7 +66,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .comment {
-  padding: 1.7vw 1vw 10vw;
+  padding: 4vw 4vw 10vw;
 
   position: relative;
 
