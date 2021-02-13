@@ -1,16 +1,24 @@
 <template>
   <div id="sky" ref="sky">
     <canvas ref="cvs"></canvas>
-    <img src="../myView.png" alt="" class="buildingView" />
+    <img
+      :src="`${globalConst.qiBaseURL}/myViews.png`"
+      alt=""
+      class="buildingView"
+    />
     <div class="filter"></div>
     <CentralWord class="central_word" welcomeWord="BA-Moment" :isBegin="true">
       <!-- 打字效果 -->
       <v-row justify="center" class="introduce" ref="typeContent"></v-row>
     </CentralWord>
     <router-link :to="{ name: 'articleList' }">
-      <BlinkBtn class="start_btn">Start</BlinkBtn>
+      <BlinkBtn class="start_btn" @click.native="playMusic">Start</BlinkBtn>
     </router-link>
     <!-- <BgMusic :notTopBar="true" /> -->
+    <!-- 备案号 -->
+    <a class="record" href="https://beian.miit.gov.cn" target="_blank"
+      >粤ICP备2020139302号</a
+    >
   </div>
 </template>
 
@@ -63,6 +71,9 @@ export default {
       }
       // 下次重绘之前调用回调函数更新动画
       requestAnimationFrame(this.animate);
+    },
+    playMusic() {
+      this.$store.state.domStore.isPlayMusic = true;
     }
   },
   async created() {
@@ -134,6 +145,13 @@ export default {
   .start_btn {
     top: 30vh;
   }
+
+  .record {
+    color: #fff;
+    position: absolute;
+    right: 5px;
+    bottom: 2px;
+  }
 }
 
 @media screen and (max-width: $phone_computer) {
@@ -148,6 +166,15 @@ export default {
       #75517d 42%,
       #1b2947 75%
     );
+  }
+  .central_word {
+    @include center(absolute);
+    .flash {
+      font-size: 5vw !important;
+    }
+    .introduce {
+      font-size: 5vw !important;
+    }
   }
 }
 </style>

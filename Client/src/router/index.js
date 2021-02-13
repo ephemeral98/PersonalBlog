@@ -1,3 +1,5 @@
-import protect from "./protect.js";
+import "./loading.js";
+import "./protect.js";
+import router from "./router.js";
 
-export default protect;
+export default router;

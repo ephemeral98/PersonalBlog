@@ -58,7 +58,7 @@ async function getArticleInfo(id) {
   const url = `/articles/detail/${id}`;
   const resp = await myAxios.get(url);
   if (resp.data.status === "success") {
-    const articleDate = tools.getMyDate(resp.data.data.createdAt);
+    const articleDate = tools.getEnDate(resp.data.data.createdAt);
     Object.assign(resp.data.data, articleDate);
     return resp.data.data;
   }

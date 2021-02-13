@@ -55,14 +55,17 @@
       $color1,
       $color2,
       $color1);
+  // background-clip: text;
+  // color: transparent;
   background-clip: text;
   color: transparent;
+  // top: 0;
 }
 
 .enter_main {
-  background-image: radial-gradient($my_pink, $my_blue);
-  background-clip: text;
-  color: transparent;
+  // color: $my_blue;
+  cursor: pointer;
+  @include txtGradient("", $my_blue, $my_pink, plum);
   font-size: 30px;
 }
 

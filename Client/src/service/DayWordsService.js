@@ -12,6 +12,6 @@ export default async function getDayWords() {
   if (resp.data.status === "success") {
     // 取第一条的内容
     const res = getDayWordsHelper(resp.data.data.datas);
-    return res[0].content;
+    return res[0] ? res[0].content : "";
   }
 }

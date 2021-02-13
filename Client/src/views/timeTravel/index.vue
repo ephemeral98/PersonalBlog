@@ -9,7 +9,7 @@
             <!-- 每篇文章 -->
             <v-row class="art_chunk">
               <v-col class="occupyImg">
-                <img src="../../assets/img/portrait.png" alt="" />
+                <img :src="`${globalConst.qiBaseURL}/portrait.png`" alt="" />
               </v-col>
               <v-col class="content">
                 <div class="title">{{ art.title }}</div>

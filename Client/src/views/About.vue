@@ -146,7 +146,7 @@ export default {
 
     .card {
       @include card-basic(100px, $wechat_color);
-      background-image: url(../assets/img/QRcode.png);
+      background-image: url(#{$qiBaseURL}/QRcode.png);
       background-size: 100%;
       transform: translate(-30%, -110%);
     }

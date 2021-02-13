@@ -1,6 +1,9 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:4399";
+axios.defaults.baseURL =
+  process.env.NODE_ENV === "production"
+    ? "http://8.129.235.98:2333"
+    : "http://localhost:2333";
 
 // 添加请求拦截器
 axios.interceptors.request.use(

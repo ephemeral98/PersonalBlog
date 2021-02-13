@@ -8,10 +8,15 @@ $qq_color: #10a4ff;
 
 // my_head 样式
 $top_bar_height: 60px; // 顶部导航栏高度
-$top_bg_color: rgba(255, 255, 255, 0.7);
+$top_bg_color: rgba(255, 255, 255, 0.575);
 $font_size: 17.5px;
 
 $mask_level: 9999; // 遮罩层层级
 $pop_level: 99999; // 一般弹窗层级
+$top_level: 999999; // 最上层级
 
 $phone_computer: 600px; // 手机屏和电脑屏的分界点
+
+// $qiBaseURL: url('http://guozhenqiang.xyz/loginBg.jpg');
+$qiBaseURL: "http://guozhenqiang.xyz";
+$headURL: "https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302";

@@ -1,39 +1,63 @@
 <template>
-  <div>
+  <div ref="musicWrap">
     <audio ref="music">
-      <source src="../../assets/captain2.mp3" />
+      <source :src="`${globalConst.qiBaseURL}/captain2.mp3`" />
     </audio>
     <button
-      class="music iconfont"
+      class="music iconfont btn"
       :class="[
-        playingMusic ? 'icon-stop' : 'icon-ziyuanldpi',
+        isPlayMusic ? 'icon-stop' : 'icon-ziyuanldpi',
         notTopBar ? 'top_bar' : 'not_top_bar'
       ]"
-      @click="playMusic"
-    ></button>
+    >
+      <!-- <span style="font-size:0.1px">
+        {{ playingMusic }}
+      </span> -->
+      <!-- {{ playingMusic }} -->
+    </button>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   props: ["notTopBar"],
   data: () => ({
-    playingMusic: false
+    music: ""
   }),
+  computed: {
+    ...mapState("domStore", ["isPlayMusic"])
+  },
+  watch: {
+    isPlayMusic(val) {
+      if (val) {
+        this.music.play();
+      } else {
+        this.music.pause();
+      }
+      this.$refs.musicWrap.style.display = "none";
+      setTimeout(() => {
+        this.$refs.musicWrap.style.display = "block";
+      }, 10);
+    }
+  },
   methods: {
     playMusic() {
       const music = this.$refs.music;
-      this.playingMusic = !this.playingMusic;
-      if (this.playingMusic) {
+      // this.playingMusic = !this.playingMusic;
+      if (this.isPlayMusic) {
         music.play();
       } else {
         music.pause();
       }
-      music.addEventListener("ended", () => {
-        console.log("hello, ended");
-        this.playingMusic = false;
-      });
     }
+  },
+  mounted() {
+    this.music = this.$refs.music;
+    this.music.addEventListener("ended", () => {
+      console.log("hello, ended");
+      this.$store.state.domStore.isPlayMusic = false;
+    });
   }
 };
 </script>
@@ -41,28 +65,31 @@ export default {
 <style lang="scss" scoped>
 .music {
   font-size: 20px;
-  background-image: linear-gradient($my_blue, $my_pink);
-  background-clip: text;
-  color: transparent;
+  color: $my_blue;
   position: fixed;
   left: 60px;
   top: 20px;
-  z-index: 99999;
+  z-index: $pop_level;
 }
 
 .not_top_bar {
-  left: 72%;
-  top: 46%;
-  font-size: 3vw;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  height: 60px !important;
+}
+
+.btn {
+  height: 30px;
+  margin-top: -2px;
+  transition: all 0.7s;
 }
 
 @media screen and (max-width: $i_md) {
   .top_bar {
-    left: 50px;
-  }
-
-  .not_top_bar {
-    top: 48%;
+    left: 58px;
   }
 }
 </style>

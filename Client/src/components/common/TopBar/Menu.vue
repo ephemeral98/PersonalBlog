@@ -1,12 +1,12 @@
 <template>
   <div class="menu" @touchmove.prevent @mousewheel.prevent>
-    <v-row style="height: 40vh">
-      <MyCard style="box-shadow: none; padding: 0" />
+    <v-row style="height: 40vh; overflow:hidden; text-overflow: ellipsis;">
+      <MyCard style="box-shadow: none; padding: 0" :menuCard="true" />
     </v-row>
-    <hr style="" class="mt-10 divider" />
+    <hr style="" class=" divider" />
 
-    <v-row class="mt-5 flex-column">
-      <v-col class="item mt-2 pl-2" v-for="nav in navList" :key="nav.name">
+    <v-row class="flex-column" style="height:60vh">
+      <v-col class="item pl-2" v-for="nav in navList" :key="nav.name">
         <router-link
           @click.native="closeMenu"
           :to="{ name: nav.name }"
@@ -35,8 +35,7 @@ export default {
 
 <style lang="scss" scoped>
 .menu {
-  width: 60vw !important;
-  height: 100vh;
+  width: 200px !important;
   background-color: #f6f8fa;
   position: fixed !important;
   top: 0 !important;
@@ -57,10 +56,11 @@ export default {
   }
 
   .item {
+    padding: 0;
     width: 100vw;
     flex: 0 0 7vh;
     line-height: 7vh;
-    font-size: 4vw;
+    font-size: 10vh;
     text-align: center;
 
     a {

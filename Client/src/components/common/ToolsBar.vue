@@ -1,9 +1,14 @@
 <template>
   <div class="tools">
     <slot></slot>
-    <button class="to_top iconfont" @click="toTop" v-if="isShowRocket">
+    <div
+      class="to_top iconfont"
+      @click="toTop"
+      v-if="isRenderRocket"
+      v-show="isShowRocket"
+    >
       &#xe614;
-    </button>
+    </div>
   </div>
 </template>
 
@@ -11,6 +16,7 @@
 export default {
   data: () => ({
     timer: null,
+    isRenderRocket: true,
     isShowRocket: false
   }),
   methods: {
@@ -30,9 +36,13 @@ export default {
         currentRocket -= (currentRocket * speedY) / currentY;
         window.scroll(0, currentY); // 滚动条
         e.target.style.top = currentRocket + "px"; // 火箭
-        if (window.scrollY === 0) {
+        if (window.scrollY <= 0) {
           clearInterval(this.timer);
           this.timer = null;
+          this.isRenderRocket = false;
+          setTimeout(() => {
+            this.isRenderRocket = true; // 让火箭重新渲染，top值初始化
+          }, 500);
         }
       }, 2);
     }
@@ -56,24 +66,27 @@ export default {
 }
 
 .tools {
+  // border: solid 2px red;
   width: 70px;
-  // background-color: gold;
   position: fixed;
-  right: 10px;
-  bottom: 10vh;
+  right: 2.5vw;
+  bottom: 23vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   .to_top {
+    cursor: pointer;
     // @include toolsBtn;
     font-size: 50px;
-    background-image: linear-gradient($my_blue, $my_pink);
-    background-clip: text;
-    color: transparent;
+    // color: $my_blue;
+    @include txtGradient("", $my_pink, $my_blue, plum);
+    position: static;
 
     &:hover {
-      background-image: linear-gradient($my_blue, $my_pink, red);
+      @include txtGradient("", $my_blue, $my_pink, red);
+      position: static;
+
       animation: shake 0.1s ease-in-out infinite alternate;
 
       &::after {

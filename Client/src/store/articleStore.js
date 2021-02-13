@@ -6,7 +6,8 @@ export default {
   namespaced: true,
   state: {
     data: null,
-    isLoading: false
+    isLoading: false,
+    gotLike: false
   },
   mutations: {
     setData(state, payload) {

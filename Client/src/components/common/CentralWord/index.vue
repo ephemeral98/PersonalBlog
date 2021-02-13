@@ -50,12 +50,15 @@ export default {
 @keyframes spotlight {
   0% {
     clip-path: circle(7vw at 0% 50%);
+    -webkit-clip-path: circle(7vw at 0% 50%);
   }
   50% {
     clip-path: circle(7vw at 100% 50%);
+    -webkit-clip-path: circle(7vw at 100% 50%);
   }
   100% {
     clip-path: circle(7vw at 0% 50%);
+    -webkit-clip-path: circle(7vw at 0% 50%);
   }
 }
 
@@ -68,9 +71,11 @@ export default {
     font-size: 8vw;
     font-weight: bold;
     color: #333;
+    position: relative;
 
     .flash {
       @include txtGradient("", $my_blue, $my_pink, plum);
+      top: 0;
     }
   }
 
@@ -80,6 +85,7 @@ export default {
     .flash {
       z-index: 10;
       clip-path: circle(7vw at 0% 50%);
+
       animation-name: spotlight;
       animation-duration: 2s;
       animation-iteration-count: 5;

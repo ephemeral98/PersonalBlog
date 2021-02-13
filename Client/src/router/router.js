@@ -1,42 +1,48 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import * as articleHttp from "@/service/ArticleService.js";
+
 Vue.use(VueRouter);
+
+/**
+ * 组件懒加载
+ * @param {*} view 页面
+ */
+function loadView(view) {
+  return () =>
+    import(/* webpackChunkName: "view-[request]" */ `@/views/${view}`);
+}
 
 const routes = [
   {
     path: "/articleList",
     name: "articleList",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/ArticleList.vue")
+    component: loadView("ArticleList")
   },
   {
     path: "/timeTravel",
     name: "timeTravel",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/timeTravel")
+    component: loadView("timeTravel")
   },
   {
     path: "/category",
     name: "category",
-    component: () => import(/* webpackChunkName: "about" */ "../views/category")
+    component: loadView("category")
   },
   {
     path: "/guestbook",
     name: "guestbook",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/guestbook")
+    component: loadView("guestbook")
   },
   {
     path: "/about",
     name: "about",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    component: loadView("About")
   },
   {
     path: "/article/:articleId",
     name: "article",
-    component: () => import(/* webpackChunkName: "about" */ "../views/article"),
+    component: loadView("article"),
     beforeEnter: (to, from, next) => {
       const { articleId } = to.params;
       articleHttp.addReadings(articleId);
@@ -48,20 +54,20 @@ const routes = [
     name: "articleCardList",
     component: () =>
       import(
-        /* webpackChunkName: "about" */
+        /* webpackChunkName: "articleCardList" */
         "@/components/category/ArticleCardList.vue"
       )
   },
   {
     path: "/",
     name: "begin",
-    component: () => import(/* webpackChunkName: "about" */ "../views/Begin")
+    component: loadView("Begin")
   }
 ];
 
 const router = new VueRouter({
   mode: "history",
-  base: process.env.BASE_URL,
+  // base: process.env.BASE_URL,
   routes
 });
 

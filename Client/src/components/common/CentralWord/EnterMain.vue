@@ -1,7 +1,7 @@
 <template>
-  <button @click="enter" class="enter move enter_main iconfont icon-xia">
+  <div @click="enter" class="enter move enter_main iconfont icon-xia">
     <slot></slot>
-  </button>
+  </div>
 </template>
 
 <script>
@@ -19,13 +19,18 @@ export default {
 
       let speed = 30;
       this.timer = setInterval(() => {
+        console.log("还在滚动");
+        console.log(
+          window.scrollY + document.documentElement.clientHeight,
+          document.body.clientHeight
+        );
         currentY += speed;
         window.scroll(0, currentY);
         if (window.scrollY >= document.documentElement.clientHeight) {
           clearInterval(this.timer);
           this.timer = null;
         } else if (
-          window.scrollY + document.documentElement.clientHeight >=
+          window.scrollY + document.documentElement.clientHeight + 1 >=
           document.body.clientHeight
         ) {
           // 到底了

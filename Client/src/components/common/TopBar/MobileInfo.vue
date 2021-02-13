@@ -1,7 +1,7 @@
 <template>
   <div class="mobile_info">
     <v-row>
-      <img src="../../../assets/img/portrait.png" alt="" />
+      <img :src="`${baseURL}/portrait.png`" alt="" />
       <v-row>Barry</v-row>
       <v-row>你见过凌晨四点的洛杉矶吗</v-row>
     </v-row>

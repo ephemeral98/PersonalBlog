@@ -1,7 +1,7 @@
 <template>
   <BasicModal :basicConfig="alertConfig" v-show="isShow" class="modal">
     <template #content>
-      <div class="content">敬请期待</div>
+      <div class="content">敬请期待！</div>
     </template>
     <template #controlBtn>
       <button class="cancel_btn" @click="closeModal">Ok</button>

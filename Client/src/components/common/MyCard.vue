@@ -1,17 +1,20 @@
 <template>
-  <div class="my_card mt-7 mt-sm-0">
-    <v-row class="justify-center">
-      <img
-        src="../../assets/img/portrait.png"
-        alt=""
-        class="avatar"
-        ref="avatar"
-        @mouseenter="spining"
-        @touchstart="spining"
-      />
-    </v-row>
-    <v-row justify="center" style="fontsize: 7vw" class="name"> Barry </v-row>
-    <v-row justify="center" class="mb-5 introduce">{{ dayWords }}</v-row>
+  <div
+    class="my_card mt-sm-4 d-flex align-center flex-column"
+    :class="menuCard ? 'menu_card' : null"
+  >
+    <!-- <v-row class="justify-center" style="width: 100%; max-height: 100%"> -->
+    <img
+      :src="`${globalConst.qiBaseURL}/portrait.png`"
+      alt=""
+      class="avatar"
+      ref="avatar"
+      @mouseenter="spining"
+      @touchstart="spining"
+    />
+    <!-- </v-row> -->
+    <div style="fontsize: 28px" class="name">Barry</div>
+    <div class="introduce" style="text-align: center">{{ dayWords }}</div>
   </div>
 </template>
 
@@ -19,6 +22,7 @@
 import * as utils from "@/utils/toolsFunc.js";
 import dayWordHttp from "@/service/DayWordsService.js";
 export default {
+  props: ["menuCard"],
   data: () => ({
     ava: null,
     rotateDeg: 90,
@@ -26,7 +30,7 @@ export default {
   }),
   methods: {
     spining() {
-      this.ava.style.transformOrigin = `bottom center`;
+      this.ava.style.transformOrigin = `center center`;
       this.ava.style.transform = `rotate(${this.rotateDeg}deg)`;
       this.rotateDeg += utils.getRandom(90, 270);
     }
@@ -43,9 +47,11 @@ export default {
 <style lang="scss" scoped>
 // @import "@/assets/common/var.scss";
 .my_card {
-  max-height: 490px;
+  // max-height: 490px;
+  width: 60vw;
   overflow: auto;
-  // background-color: rgba(128, 128, 128, 0.53) !important;
+  overflow-x: hidden;
+  // background-color: rgba(240, 2, 2, 0.53) !important;
   padding: 5px 20px;
   box-shadow: 0 0 20px gray;
   @include borderShadow;
@@ -54,8 +60,7 @@ export default {
   }
 
   .avatar {
-    width: 70%;
-    height: auto;
+    width: 100%;
     border-radius: 50%;
 
     transition: all 0.5s;
@@ -66,17 +71,33 @@ export default {
   }
 }
 
+.menu_card {
+  img {
+    width: 80% !important;
+  }
+  .name {
+    font-size: 6vw !important;
+  }
+  .introduce {
+    font-size: 2.5vw !important;
+  }
+}
+
 // 手机屏
 @media screen and (max-width: $phone_computer) {
   .my_card {
     width: 60vw !important;
     .name {
-      font-size: 7vw;
+      font-size: 28px;
     }
   }
 
   .introduce {
-    @include mulOverHidden; // 手机端，超过3行溢出隐藏打点显示
+    margin: 5px 0 !important;
+    padding: 0 10px !important;
+    // font-size: 1vw;
+
+    @include mulOverHidden(2); // 手机端，超过2行溢出隐藏打点显示
   }
 }
 

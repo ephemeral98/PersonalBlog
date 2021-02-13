@@ -4,13 +4,65 @@ import myAxios from "./Request.js";
  * 获取阿拉伯数字的时间格式
  * @param {*} time 时间戳或者格林威治时间格式都行
  */
-function getMyDate(time) {
+function getNumDate(time) {
   const year = new Date(time).getFullYear();
   const month = new Date(time).getMonth() + 1;
   const date = new Date(time).getDate();
   const hour = new Date(time).getHours();
   const min = new Date(time).getMinutes();
   const sec = new Date(time).getSeconds();
+  return {
+    year,
+    month,
+    date,
+    hour,
+    min,
+    sec
+  };
+}
+
+/**
+ * 获取英语日期简写
+ * @param {*} time 时间戳或者格林威治时间格式都行
+ */
+function getEnDate(time) {
+  let { year, month, date, hour, min, sec } = getNumDate(time);
+  if (month == "1") {
+    month = "Jan";
+  } else if (month == "2") {
+    month = "Feb";
+  } else if (month == "3") {
+    month = "Mar";
+  } else if (month == "4") {
+    month = "Apr";
+  } else if (month == "5") {
+    month = "May";
+  } else if (month == "6") {
+    month = "Jun";
+  } else if (month == "7") {
+    month = "Jul";
+  } else if (month == "8") {
+    month = "Aug";
+  } else if (month == "9") {
+    month = "Sep";
+  } else if (month == "10") {
+    month = "Oct";
+  } else if (month == "11") {
+    month = "Nov";
+  } else if (month == "12") {
+    month = "Dec";
+  }
+
+  if (date == "1" || date == "21" || date == "31") {
+    date += "st";
+  } else if (date == "2" || date == "22") {
+    date += "nd";
+  } else if (date == "3" || date == "23") {
+    date += "rd";
+  } else {
+    date += "th";
+  }
+
   return {
     year,
     month,
@@ -32,14 +84,15 @@ async function getNeeded(url, params) {
     const count = resp.data.data.totals;
     const infos = resp.data.data.datas.rows || resp.data.data.datas;
     const artList = infos.map(art => {
-      const { id, title, introduce, Category, createdAt } = art;
+      const { id, title, introduce, Category, face, createdAt } = art;
 
       return {
         id,
         title,
         introduce,
         Category,
-        ...getMyDate(createdAt)
+        face,
+        ...getEnDate(createdAt)
       };
     });
     return {
@@ -83,7 +136,7 @@ function commentHelper(originData) {
     for (let j = 0, len = originData.length; j < len; j++) {
       if (uniqueData[i].parent === originData[j].parent) {
         // 在归队之前，先把时间的格式弄一弄
-        const { year, month, date, hour, min, sec } = getMyDate(
+        const { year, month, date, hour, min, sec } = getEnDate(
           originData[j].createdAt
         );
         originData[j].year = year;
@@ -106,7 +159,7 @@ function commentHelper(originData) {
     .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
     .map(f => {
       // 层主的时间格式也弄一弄
-      const { year, month, date, hour, min, sec } = getMyDate(f.createdAt);
+      const { year, month, date, hour, min, sec } = getEnDate(f.createdAt);
       f.year = year;
       f.month = month;
       f.date = date;
@@ -132,4 +185,4 @@ function commentHelper(originData) {
   return floor;
 }
 
-export { getNeeded, commentHelper, getMyDate };
+export { getNeeded, commentHelper, getNumDate, getEnDate };

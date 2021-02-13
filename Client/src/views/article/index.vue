@@ -1,29 +1,36 @@
 <template>
   <div class="article">
     <CompHead>
-      <div>{{ artInfo.title || "标题" }}</div>
-      <div class="art_info d-flex justify-center flex-wrap">
-        <div>
-          <span>{{ artInfo.month }}.{{ artInfo.date }}.{{ artInfo.year }}</span>
-        </div>
-        <div>
-          阅读：<span>{{ artInfo.readNum || 0 }}</span>
-        </div>
-        <div>
-          字数：<span>{{ artInfo.wordsNum || 0 }}</span>
-        </div>
-        <div>
-          评论：<span>{{ floorsCount || 0 }}</span>
-        </div>
-        <div>
-          点赞：<span>{{ artInfo.likeNum || 0 }}</span>
+      <div class="art_title">{{ artInfo.title || "标题" }}</div>
+      <div class="art_info d-flex justify-center">
+        <div class="d-flex justify-center flex-wrap">
+          <div>
+            <span
+              >{{ artInfo.date }}.{{ artInfo.month }}.{{ artInfo.year }}</span
+            >
+          </div>
+          <div class="iconfont">
+            &#xe665; <span>{{ artInfo.readNum || 0 }}</span>
+          </div>
+          <div class="iconfont">
+            &#xe742; <span>{{ artInfo.wordsNum || 0 }}</span>
+          </div>
+          <div class="iconfont">
+            &#xe658; <span>{{ floorsCount || 0 }}</span>
+          </div>
+          <div class="iconfont">
+            &#xe61a;
+            <span>{{
+              (gotLike ? artInfo.likeNum + 1 : artInfo.likeNum) || 0
+            }}</span>
+          </div>
         </div>
       </div>
     </CompHead>
-    <v-container>
-      <div class="art_content">
+    <v-container class="pl-md-8 pr-md-8 pl-lg-16 pr-lg-16">
+      <div class="art_content ml-md-8 mr-md-8 ml-lg-16 mr-lg-16">
         <div class="introduce">
-          <div class="title">前言</div>
+          <div class="my_title iconfont">前言 &#xe607;</div>
           <div class="intro_content" ref="introContent"></div>
         </div>
         <div class="art_word">
@@ -65,6 +72,7 @@ export default {
   }),
   computed: {
     ...mapState("commentStore", ["floorsCount"]),
+    ...mapState("articleStore", ["gotLike"]),
     articleId() {
       return this.$route.params.articleId;
     }
@@ -75,7 +83,7 @@ export default {
       if (this.isLikeThisTime) {
         return;
       }
-      console.log("like", this.articleId);
+      this.$store.state.articleStore.gotLike = true;
       const resp = await articleHttp.addLike(this.articleId);
       // console.log(resp);
       if (resp) {
@@ -93,6 +101,15 @@ export default {
     this.$refs.artWord.innerHTML = this.artInfo.content; // 文章内容
     this.$refs.introContent.innerHTML = this.artInfo.introduce; // 文章介绍
 
+    // wangEditor 如果代码块溢出。。
+    const words = this.$refs.artWord;
+    const codes = words.querySelectorAll("code");
+    codes.forEach(c => {
+      c.style.width = "100%";
+      c.style.overflowX = "auto";
+      c.style.display = "block";
+    });
+
     // 异步分发，获取该文章下的评论
     this.$store.dispatch("commentStore/getMoreComments", [
       1,
@@ -102,6 +119,9 @@ export default {
   },
   mounted() {
     window.scrollTo(0, 0);
+  },
+  beforeDestroy() {
+    this.$store.state.articleStore.gotLike = false;
   }
 };
 </script>
@@ -112,11 +132,20 @@ export default {
     border-radius: 10px;
   }
 }
+
+.art_title {
+  font-size: 3vw;
+}
+
 .art_info {
   width: 100vw;
-  font-size: 15px;
-  font-weight: normal;
-  color: gray;
+  > div {
+    margin: 0 auto;
+    background-color: rgba($my_blue, 50%);
+    font-size: 15px;
+    font-weight: normal;
+    color: #fff;
+  }
 
   span {
     margin-right: 18px;
@@ -128,7 +157,7 @@ export default {
     padding: 1.5vw;
     @include borderShadow;
 
-    .title {
+    .my_title {
       border-bottom: dashed 2px $gray;
     }
   }
@@ -137,6 +166,7 @@ export default {
     margin: 3vw 0;
     padding: 1.5vw;
     @include borderShadow;
+    overflow: hidden;
   }
 }
 
@@ -153,5 +183,11 @@ export default {
   border: dashed 2px $my_pink;
   border-radius: 50%;
   padding: 7px;
+}
+
+@media screen and (max-width: 600px) {
+  .art_title {
+    font-size: 8vw;
+  }
 }
 </style>
