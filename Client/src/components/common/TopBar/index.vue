@@ -13,7 +13,14 @@
           <!-- 我的名字or头像logo & 背景音乐 -->
           <div class="left col-3 col-sm-3 col-md-1 d-flex">
             <router-link to="/" class="me">
+<<<<<<< HEAD
               <img :src="`${globalConst.qiBaseURL}/portrait.png`" alt="" />
+=======
+              <img
+                src="http://qm23h04eq.hn-bkt.clouddn.com/portrait.png"
+                alt=""
+              />
+>>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
             </router-link>
             <!-- <BgMusic class="d-flex align-center" style="padding: 0" /> -->
           </div>

@@ -83,7 +83,14 @@ export default {
       if (this.isLikeThisTime) {
         return;
       }
+<<<<<<< HEAD
       this.$store.state.articleStore.gotLike = true;
+=======
+      console.log("like", this.articleId);
+      console.log(this.$store.state.articleStore);
+      this.$store.state.articleStore.gotLike = true;
+      console.log(this.$store.state.articleStore);
+>>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
       const resp = await articleHttp.addLike(this.articleId);
       // console.log(resp);
       if (resp) {

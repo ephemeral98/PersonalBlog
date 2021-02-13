@@ -70,7 +70,11 @@ export default {
   width: 70px;
   position: fixed;
   right: 2.5vw;
+<<<<<<< HEAD
   bottom: 23vh;
+=======
+  bottom: 10vh;
+>>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
   display: flex;
   flex-direction: column;
   align-items: center;

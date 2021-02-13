@@ -65,6 +65,7 @@
 export default {
   props: ["floor"],
   data: () => ({
+<<<<<<< HEAD
     visitor: "http://api.rosysun.cn/sjtx/?type=2&"
   }),
   computed: {
@@ -72,6 +73,11 @@ export default {
       return `${this.globalConst.qiBaseURL}/portrait.png` || "";
     }
   },
+=======
+    blogOwnerAvatar: "http://qm23h04eq.hn-bkt.clouddn.com/portrait.png",
+    visitor: "http://api.rosysun.cn/sjtx/?type=2&"
+  }),
+>>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
   methods: {
     toReply(e) {
       // 拿到楼层，昵称，--> vuex

@@ -1,7 +1,11 @@
 <template>
   <div ref="musicWrap">
     <audio ref="music">
+<<<<<<< HEAD
       <source :src="`${globalConst.qiBaseURL}/captain2.mp3`" />
+=======
+      <source src="http://qm23h04eq.hn-bkt.clouddn.com/captain2.mp3" />
+>>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
     </audio>
     <button
       class="music iconfont btn"
@@ -69,7 +73,11 @@ export default {
   position: fixed;
   left: 60px;
   top: 20px;
+<<<<<<< HEAD
   z-index: $pop_level;
+=======
+  z-index: 999999;
+>>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
 }
 
 .not_top_bar {
