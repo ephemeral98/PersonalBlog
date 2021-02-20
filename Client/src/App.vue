@@ -1,14 +1,10 @@
 <template>
   <v-app>
-<<<<<<< HEAD
     <!-- 顶部导航栏 -->
     <TopBar v-show="isBegin" @hideMusic="isShowMusic = $event" />
     <!-- 加载动画 -->
     <LoadAnimate v-if="isLoadingWords" />
     <!-- 背景音乐 -->
-=======
-    <TopBar v-show="isBegin" @hideMusic="isShowMusic = $event" />
->>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
     <transition
       enter-active-class="animate__animated animate__fadeInDown"
       leave-active-class="animate__animated animate__fadeOutUp"
@@ -19,7 +15,6 @@
         v-show="isShowMusic"
       />
     </transition>
-<<<<<<< HEAD
     <!-- 各个页面 -->
     <transition name="fade" mode="out-in">
       <router-view
@@ -27,11 +22,6 @@
         @mousewheel.prevent
         v-if="!isLoadingWords"
       />
-=======
-
-    <transition name="fade" mode="out-in">
-      <router-view @touchmove.prevent @mousewheel.prevent />
->>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
     </transition>
   </v-app>
 </template>
@@ -60,15 +50,10 @@ export default {
   },
   methods: {
     playMusic() {
-      this.$store.state.domStore.isPlayMusic = !this.$store.state.domStore
-        .isPlayMusic;
-    }
-  },
-  methods: {
-    playMusic() {
-      console.log("hello, mu");
-      this.$store.state.domStore.isPlayMusic = !this.$store.state.domStore
-        .isPlayMusic;
+      this.$store.commit(
+        "domStore/setIsPlayMusic",
+        !this.$store.state.domStore.isPlayMusic
+      );
     }
   }
 };

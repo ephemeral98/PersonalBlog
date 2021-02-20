@@ -5,11 +5,7 @@
   >
     <!-- <v-row class="justify-center" style="width: 100%; max-height: 100%"> -->
     <img
-<<<<<<< HEAD
       :src="`${globalConst.qiBaseURL}/portrait.png`"
-=======
-      src="http://qm23h04eq.hn-bkt.clouddn.com/portrait.png"
->>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
       alt=""
       class="avatar"
       ref="avatar"
@@ -18,11 +14,7 @@
     />
     <!-- </v-row> -->
     <div style="fontsize: 28px" class="name">Barry</div>
-<<<<<<< HEAD
     <div class="introduce" style="text-align: center">{{ dayWords }}</div>
-=======
-    <div class="introduce" style="text-align:center">{{ dayWords }}</div>
->>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
   </div>
 </template>
 

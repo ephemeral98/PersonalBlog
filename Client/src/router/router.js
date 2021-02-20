@@ -2,12 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import * as articleHttp from "@/service/ArticleService.js";
 
-<<<<<<< HEAD
-=======
-import NProgress from "nprogress";
-import "nprogress/nprogress.css";
-
->>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
 Vue.use(VueRouter);
 
 /**
@@ -75,18 +69,6 @@ const router = new VueRouter({
   mode: "history",
   // base: process.env.BASE_URL,
   routes
-});
-
-NProgress.inc(0.2);
-NProgress.configure({ easing: "ease", speed: 500, showSpinner: true });
-
-router.beforeEach((to, from, next) => {
-  NProgress.start();
-  next();
-});
-
-router.afterEach(() => {
-  NProgress.done();
 });
 
 export default router;

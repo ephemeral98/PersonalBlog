@@ -1,7 +1,7 @@
 <template>
   <v-container class="my_container mt-15">
     <v-layout>
-      <v-flex xs12 sm9_5 md9_5 lg9_5 xl9_5 mb-7>
+      <v-flex xs12 sm9_5 md9_5 lg9_5 xl9_5 mb-7 cla>
         <!-- 主要内容放在这 -->
         <slot></slot>
       </v-flex>

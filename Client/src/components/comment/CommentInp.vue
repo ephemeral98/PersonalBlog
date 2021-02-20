@@ -132,6 +132,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.comment_inp {
+  background-color: $square_bgColor;
+}
+
 .my_title {
   font-size: 1.3rem;
 }

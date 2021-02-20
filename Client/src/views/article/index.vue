@@ -83,14 +83,7 @@ export default {
       if (this.isLikeThisTime) {
         return;
       }
-<<<<<<< HEAD
-      this.$store.state.articleStore.gotLike = true;
-=======
-      console.log("like", this.articleId);
-      console.log(this.$store.state.articleStore);
-      this.$store.state.articleStore.gotLike = true;
-      console.log(this.$store.state.articleStore);
->>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
+      this.$store.commit("articleStore/setGotLike", true);
       const resp = await articleHttp.addLike(this.articleId);
       // console.log(resp);
       if (resp) {
@@ -128,7 +121,7 @@ export default {
     window.scrollTo(0, 0);
   },
   beforeDestroy() {
-    this.$store.state.articleStore.gotLike = false;
+    this.$store.commit("articleStore/setGotLike", false);
   }
 };
 </script>
@@ -160,6 +153,8 @@ export default {
 }
 
 .art_content {
+  background-color: $square_bgColor;
+
   .introduce {
     padding: 1.5vw;
     @include borderShadow;

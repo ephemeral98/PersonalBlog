@@ -15,6 +15,12 @@ export default {
     },
     setFloorsCount(state, payload) {
       state.floorsCount = payload;
+    },
+    setNickName(state, payload) {
+      state.nickName = payload;
+    },
+    setFloorId(state, payload) {
+      state.floorId = payload;
     }
   },
   actions: {

@@ -15,6 +15,9 @@ export default {
     },
     setIsLoading(state, payload) {
       state.isLoading = payload;
+    },
+    setGotLike(state, payload) {
+      state.gotLike = payload;
     }
   },
   actions: {

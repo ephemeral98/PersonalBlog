@@ -30,6 +30,7 @@ export default {
 
   .art_item {
     margin: 2.3vh 0 !important;
+    background-color: $square_bgColor;
 
     &:first-child {
       margin-top: 0;

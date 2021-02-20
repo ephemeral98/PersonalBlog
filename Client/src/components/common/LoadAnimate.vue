@@ -102,7 +102,7 @@ export default {
 
         // 已全部显示，隐藏组件
         if (wordArr.length <= this.count) {
-          this.$store.state.domStore.isLoadingWords = false;
+          this.$store.commit("domStore/setIsLoadingWords", false);
         }
       }, interval);
     }
@@ -113,8 +113,8 @@ export default {
   },
   beforeDestroy() {
     clearTimeout(this.timer);
-    this.$store.state.domStore.isLoadingWordsFast = false;
-    this.$store.state.domStore.isLoadingWords = false;
+    this.$store.commit("domStore/setIsLoadingWordsFast", false);
+    this.$store.commit("domStore/setIsLoadingWords", false);
   }
 };
 </script>

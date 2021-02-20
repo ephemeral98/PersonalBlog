@@ -66,6 +66,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .comment {
+  background-color: $square_bgColor;
   padding: 4vw 4vw 10vw;
 
   position: relative;
@@ -74,7 +75,6 @@ export default {
 
   .comment_list {
     margin-top: 50px;
-    // background-color: lightblue;
   }
 
   .more {

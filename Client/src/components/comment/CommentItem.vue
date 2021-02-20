@@ -65,7 +65,6 @@
 export default {
   props: ["floor"],
   data: () => ({
-<<<<<<< HEAD
     visitor: "http://api.rosysun.cn/sjtx/?type=2&"
   }),
   computed: {
@@ -73,11 +72,6 @@ export default {
       return `${this.globalConst.qiBaseURL}/portrait.png` || "";
     }
   },
-=======
-    blogOwnerAvatar: "http://qm23h04eq.hn-bkt.clouddn.com/portrait.png",
-    visitor: "http://api.rosysun.cn/sjtx/?type=2&"
-  }),
->>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
   methods: {
     toReply(e) {
       // 拿到楼层，昵称，--> vuex
@@ -85,8 +79,8 @@ export default {
       window.scrollTo(0, 566);
       e.parent == -1 ? (this.floorId = e.id) : (this.floorId = e.parent);
       this.nickName = e.name;
-      this.$store.state.commentStore.nickName = this.nickName;
-      this.$store.state.commentStore.floorId = this.floorId;
+      this.$store.commit("commentStore/setNickName", this.nickName);
+      this.$store.commit("commentStore/setFloorId", this.floorId);
     }
   }
 };

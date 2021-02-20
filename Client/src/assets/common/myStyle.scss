@@ -3,10 +3,6 @@
   width: 100vw;
   height: 100vh;
   position: relative;
-<<<<<<< HEAD
-=======
-  background-image: url(https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302) !important;
->>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
   background-size: cover;
   background-attachment: fixed;
   background-image: url($headURL) !important;
@@ -30,11 +26,7 @@
 
 // 进度条
 #nprogress {
-<<<<<<< HEAD
   z-index: $top_level !important;
-=======
-  z-index: 999999 !important;
->>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
   position: fixed;
   top: 0;
 
@@ -49,7 +41,9 @@
   background-color: #b9b9b94d !important;
   color: #656565 !important;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
+.v-application--wrap {
+  background-image: url("#{$bgPicture}");
+  background-size: cover;
+  background-attachment: fixed;
+}

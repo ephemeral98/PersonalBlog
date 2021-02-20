@@ -2,11 +2,7 @@
   <div id="sky" ref="sky">
     <canvas ref="cvs"></canvas>
     <img
-<<<<<<< HEAD
       :src="`${globalConst.qiBaseURL}/myViews.png`"
-=======
-      src="http://qm23h04eq.hn-bkt.clouddn.com/myView.png"
->>>>>>> c291bc0c863cda1424eda8b6b79a270375b3e416
       alt=""
       class="buildingView"
     />
@@ -77,7 +73,7 @@ export default {
       requestAnimationFrame(this.animate);
     },
     playMusic() {
-      this.$store.state.domStore.isPlayMusic = true;
+      this.$store.commit("domStore/setIsPlayMusic", true);
     }
   },
   async created() {

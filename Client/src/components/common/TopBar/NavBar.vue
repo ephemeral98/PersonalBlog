@@ -22,17 +22,10 @@
 
 <script>
 export default {
-  components: {},
-  data: () => ({
-    // isShowMenu: false
-  }),
   props: ["navList"],
   methods: {
     showMenu() {
-      // this.isShowMenu = true;
-      this.$store.state.domStore.mask = true;
-      this.$store.state.domStore.isShowMenu = true;
-      console.log(this.$store.state.domStore);
+      this.$store.commit("domStore/showMenu", true);
     }
   }
 };
