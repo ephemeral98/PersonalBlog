@@ -31,7 +31,8 @@ export default {
     CommentInp
   },
   data: () => ({
-    loadTimes: 2 // 第2次加载开始
+    loadTimes: 2, // 第2次加载开始
+    limit: 7 // 每次多少条
   }),
   computed: {
     ...mapState("commentStore", ["floorsData", "floorsCount"]),
@@ -53,7 +54,7 @@ export default {
       // 从第二次加载开始，每次追加载7条评论
       this.$store.dispatch("commentStore/getMoreComments", [
         this.loadTimes,
-        7,
+        this.limit,
         this.articleId
       ]);
       this.loadTimes++;

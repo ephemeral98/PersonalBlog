@@ -4,7 +4,7 @@
     class="card hang"
     :style="
       showColor
-        ? 'background-color:skyblue'
+        ? 'background-color:#73C9E5; border:none; box-shadow:0 0 10px #73C9E5;'
         : `background-image:url(${article.face})`
     "
     @mouseenter.native="showColor = true"
@@ -15,7 +15,7 @@
       <div class="title">{{ article.title }}</div>
       <div class="content mt-sm-3">
         {{ article.date }}/{{ article.month }}/{{ article.year }} ·
-        {{ article.Category.name }}
+        {{ article.category.name }}
       </div>
     </div>
   </router-link>
@@ -27,6 +27,13 @@ export default {
   data: () => ({
     showColor: false
   }),
+  watch: {
+    article: {
+      handler() {
+        console.log("art:::", this.article);
+      }
+    }
+  },
   mounted() {
     /* const layoutImg = this.$refs.preImg; // 当图片加载完成的时候，设置一下尺寸
     layoutImg.addEventListener("load", () => {
@@ -64,7 +71,6 @@ export default {
   border-radius: 0px 20px 20px 20px;
   margin-left: 13vw;
   margin-top: 7vw;
-  overflow: hidden;
   position: relative;
   transition: all 1s;
   // background-image: url(../../assets/img/myDesk.jpg);
@@ -73,6 +79,19 @@ export default {
   transform-origin: top left;
   border: solid 1px $gray;
 
+  &::before {
+    content: "";
+    display: block;
+    width: 17px;
+    height: 17px;
+    background-color: rgb(182, 2, 2);
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   .infos {
     position: absolute;
     width: 100%;
@@ -80,6 +99,7 @@ export default {
     @include center(absolute);
     text-align: center;
     color: #fff;
+    overflow: hidden;
 
     .title {
       @include singleOverHidden;

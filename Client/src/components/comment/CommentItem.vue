@@ -65,7 +65,7 @@
 export default {
   props: ["floor"],
   data: () => ({
-    visitor: "http://api.rosysun.cn/sjtx/?type=2&"
+    visitor: "http://api.rosysun.cn/sjtx/?type=6"
   }),
   computed: {
     blogOwnerAvatar() {
@@ -112,6 +112,11 @@ export default {
     margin-right: 8px;
     width: 60px;
     height: 60px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .creed {
@@ -163,11 +168,6 @@ export default {
       }
     }
   }
-}
-
-img {
-  width: 100%;
-  height: 100%;
 }
 
 .blog_owner {

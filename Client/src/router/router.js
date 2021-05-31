@@ -1,48 +1,150 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import * as articleHttp from "@/service/ArticleService.js";
+// const isProduction = process.env.NODE_ENV === "production";
+// const mode = isProduction ? "history" : "hash";
 
 Vue.use(VueRouter);
-
-/**
- * 组件懒加载
- * @param {*} view 页面
- */
-function loadView(view) {
-  return () =>
-    import(/* webpackChunkName: "view-[request]" */ `@/views/${view}`);
-}
 
 const routes = [
   {
     path: "/articleList",
     name: "articleList",
-    component: loadView("ArticleList")
-  },
-  {
-    path: "/timeTravel",
-    name: "timeTravel",
-    component: loadView("timeTravel")
+    component: resolve =>
+      require.ensure(
+        [],
+        () => resolve(require("@/views/ArticleList")),
+        "articleList"
+      )
   },
   {
     path: "/category",
     name: "category",
-    component: loadView("category")
+    component: resolve =>
+      require.ensure([], () => resolve(require("@/views/category")), "category")
   },
+  {
+    path: "/timeMachine",
+    name: "timeMachine",
+    component: resolve =>
+      require.ensure(
+        [],
+        () => resolve(require("@/views/timeMachine")),
+        "timeMachine"
+      )
+  },
+  {
+    path: "/laboratory",
+    name: "laboratory",
+    component: resolve =>
+      require.ensure(
+        [],
+        () => resolve(require("@/views/Laboratory")),
+        "laboratory"
+      )
+  },
+  {
+    path: "/fate",
+    name: "fate",
+    component: resolve =>
+      require.ensure(
+        [],
+        () => resolve(require("@/views/Laboratory/Fate")),
+        "fate"
+      )
+  },
+  {
+    path: "/voice",
+    name: "voice",
+    component: resolve =>
+      require.ensure(
+        [],
+        () => resolve(require("@/views/Laboratory/Voice")),
+        "voice"
+      )
+  },
+  {
+    path: "/game",
+    name: "game",
+    component: resolve =>
+      require.ensure(
+        [],
+        () => resolve(require("@/views/Laboratory/Game")),
+        "game"
+      )
+  },
+  {
+    path: "/gluttony",
+    name: "gluttony",
+    component: resolve =>
+      require.ensure(
+        [],
+        () => resolve(require("@/views/Laboratory/Game/Gluttony")),
+        "gluttony"
+      )
+  },
+  {
+    path: "/pushBox",
+    name: "pushBox",
+    component: resolve =>
+      require.ensure(
+        [],
+        () => resolve(require("@/views/Laboratory/Game/PushBox")),
+        "pushBox"
+      )
+  },
+  {
+    path: "/puzzle",
+    name: "puzzle",
+    component: resolve =>
+      require.ensure(
+        [],
+        () => resolve(require("@/views/Laboratory/Game/Puzzle")),
+        "puzzle"
+      )
+  },
+  {
+    path: "/rubikCube",
+    name: "rubikCube",
+    component: resolve =>
+      require.ensure(
+        [],
+        () => resolve(require("@/views/Laboratory/Game/RubikCube")),
+        "rubikCube"
+      )
+  },
+  {
+    path: "/pixelBird",
+    name: "pixelBird",
+    component: resolve =>
+      require.ensure(
+        [],
+        () => resolve(require("@/views/Laboratory/Game/PixelBird")),
+        "pixelBird"
+      )
+  },
+
   {
     path: "/guestbook",
     name: "guestbook",
-    component: loadView("guestbook")
+    component: resolve =>
+      require.ensure(
+        [],
+        () => resolve(require("@/views/guestbook")),
+        "guestbook"
+      )
   },
   {
     path: "/about",
     name: "about",
-    component: loadView("About")
+    component: resolve =>
+      require.ensure([], () => resolve(require("@/views/About")), "about")
   },
   {
     path: "/article/:articleId",
     name: "article",
-    component: loadView("article"),
+    component: resolve =>
+      require.ensure([], () => resolve(require("@/views/article")), "article"),
     beforeEnter: (to, from, next) => {
       const { articleId } = to.params;
       articleHttp.addReadings(articleId);
@@ -52,16 +154,18 @@ const routes = [
   {
     path: "/articleCardList/:CategoryId",
     name: "articleCardList",
-    component: () =>
-      import(
-        /* webpackChunkName: "articleCardList" */
-        "@/components/category/ArticleCardList.vue"
+    component: resolve =>
+      require.ensure(
+        [],
+        () => resolve(require("@/components/category/ArticleCardList")),
+        "articleCardList"
       )
   },
   {
     path: "/",
     name: "begin",
-    component: loadView("Begin")
+    component: resolve =>
+      require.ensure([], () => resolve(require("@/views/Begin")), "begin")
   }
 ];
 

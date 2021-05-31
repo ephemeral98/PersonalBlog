@@ -8,11 +8,12 @@
     <MyContainer>
       <ArticleList :articles="articles" />
       <v-row justify="center" class="mt-5 mb-5">
-        <v-pagination
+        <!-- <v-pagination
           v-model="page"
           :length="pagesTotal"
           :total-visible="4"
-        ></v-pagination>
+        ></v-pagination> -->
+        <Pager :panel="3" :totals="pagesTotal" :current="page" @go-to="goTo" />
       </v-row>
     </MyContainer>
 
@@ -26,11 +27,11 @@ import EnterMain from "@/components/common/CentralWord/EnterMain.vue";
 import CentralWord from "@/components/common/CentralWord";
 import ArticleList from "@/components/ArticleList";
 import MyFoot from "@/components/common/MyFoot.vue";
-import MyContainer from "@/components/common/MyContainer.vue";
+import MyContainer from "@/components/layouts/MyContainer.vue";
 import * as artHttp from "@/service/ArticleService.js";
 
 export default {
-  // name: "ArticleList",
+  name: "articleList",
   components: {
     EnterMain,
     CentralWord,
@@ -47,24 +48,37 @@ export default {
   }),
 
   async created() {
-    const { count, artList } = await artHttp.getArtByPage(
-      this.page,
-      this.perPageSum
-    );
-    this.articles = artList;
-    this.pagesTotal = Math.ceil(count / this.perPageSum); // 页数 = 总文章数 / 每页的文章数
+    try {
+      const { count, artList } = await artHttp.getArtByPage(
+        this.page,
+        this.perPageSum
+      );
+      this.articles = artList;
+      this.pagesTotal = Math.ceil(count / this.perPageSum); // 页数 = 总文章数 / 每页的文章数
+    } catch (error) {
+      console.log("分页获取文章失败");
+    }
   },
   watch: {
     page: {
       async handler() {
         const height = document.documentElement.clientHeight;
         window.scrollTo(0, height);
-        const { artList } = await artHttp.getArtByPage(
-          this.page,
-          this.perPageSum
-        );
-        this.articles = artList;
+        try {
+          const { artList } = await artHttp.getArtByPage(
+            this.page,
+            this.perPageSum
+          );
+          this.articles = artList;
+        } catch (error) {
+          console.log("获取文章列表失败");
+        }
       }
+    }
+  },
+  methods: {
+    goTo(e) {
+      this.page = e;
     }
   }
 };

@@ -10,7 +10,7 @@
         <div class="declare mt-5">
           <div class="my_title iconfont">公告&#xec40;</div>
           <div class="content">
-            如果你来访，我不在，请和我门外的花坐一会儿。它们很温暖，我注视它们很多很多日子了。它们开得不茂盛，想起来什么说什么。
+            斯是陋室，惟汝德馨
           </div>
         </div>
       </v-flex>

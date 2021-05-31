@@ -14,14 +14,16 @@
     />
     <!-- </v-row> -->
     <div style="fontsize: 28px" class="name">Barry</div>
-    <div class="introduce" style="text-align: center">{{ dayWords }}</div>
+    <div class="introduce" style="text-align: center;">
+      {{ dayWords }}
+    </div>
   </div>
 </template>
 
 <script>
-import * as utils from "@/utils/toolsFunc.js";
 import dayWordHttp from "@/service/DayWordsService.js";
 export default {
+  name: "myCard",
   props: ["menuCard"],
   data: () => ({
     ava: null,
@@ -32,11 +34,15 @@ export default {
     spining() {
       this.ava.style.transformOrigin = `center center`;
       this.ava.style.transform = `rotate(${this.rotateDeg}deg)`;
-      this.rotateDeg += utils.getRandom(90, 270);
+      this.rotateDeg += this.$getRandom(90, 270);
     }
   },
   async created() {
-    this.dayWords = await dayWordHttp();
+    try {
+      this.dayWords = await dayWordHttp();
+    } catch (err) {
+      console.log("获取每日一句失败");
+    }
   },
   mounted() {
     this.ava = this.$refs.avatar;
@@ -79,7 +85,7 @@ export default {
     font-size: 6vw !important;
   }
   .introduce {
-    font-size: 2.5vw !important;
+    font-size: 2.5vw;
   }
 }
 
@@ -95,7 +101,7 @@ export default {
   .introduce {
     margin: 5px 0 !important;
     padding: 0 10px !important;
-    // font-size: 1vw;
+    font-size: 2vh !important;
 
     @include mulOverHidden(2); // 手机端，超过2行溢出隐藏打点显示
   }

@@ -50,6 +50,7 @@ export default {
     oldScrollY: 0,
     isShow: true,
     isShowBgColor: true,
+    countDown: 0,
     navList: [
       {
         word: "看文章",
@@ -57,13 +58,18 @@ export default {
         icon: "icon-tubiao_chakangongyi"
       },
       {
-        word: "时间轴",
-        name: "timeTravel",
+        word: "文章分类",
+        name: "category",
+        icon: "icon-ziyuan"
+      },
+      {
+        word: "时光机",
+        name: "timeMachine",
         icon: "icon-shalou"
       },
       {
-        word: "分类",
-        name: "category",
+        word: "实验室",
+        name: "laboratory",
         icon: "icon-ziyuan"
       },
       {
@@ -92,9 +98,17 @@ export default {
 
       // 是否要隐藏导航栏
       if (window.scrollY > this.oldScrollY && this.oldScrollY > 200) {
-        this.isShow = false;
-        this.$emit("hideMusic", false);
+        // 滚动条下滑
+        this.countDown++;
+        // 下滑超过 20 才隐藏导航栏
+        console.log(this.countDown);
+        if (this.countDown > 20) {
+          this.isShow = false;
+          this.$emit("hideMusic", false);
+        }
       } else {
+        // 滚动条上划
+        this.countDown = 0;
         this.isShow = true;
         this.$emit("hideMusic", true);
       }

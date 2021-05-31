@@ -1,7 +1,7 @@
 <template>
   <div ref="musicWrap">
-    <audio ref="music">
-      <source :src="`${globalConst.qiBaseURL}/captain2.mp3`" />
+    <audio ref="music" reload loop>
+      <source :src="bgMusicUrl" />
     </audio>
     <button
       class="music iconfont btn"
@@ -22,18 +22,25 @@
 import { mapState } from "vuex";
 export default {
   props: ["notTopBar"],
-  data: () => ({
-    music: ""
-  }),
+  data: () => ({}),
   computed: {
-    ...mapState("domStore", ["isPlayMusic"])
+    ...mapState("domStore", ["isPlayMusic", "bgMusicUrl"])
   },
   watch: {
+    bgMusicUrl() {
+      this.$refs.music.load();
+      if (this.isPlayMusic) {
+        this.$refs.music.play();
+      } else {
+        this.$refs.music.pause();
+      }
+    },
     isPlayMusic(val) {
       if (val) {
-        this.music.play();
+        // window.temp = this.$refs.music;
+        this.$refs.music.play();
       } else {
-        this.music.pause();
+        this.$refs.music.pause();
       }
       this.$refs.musicWrap.style.display = "none";
       setTimeout(() => {
@@ -53,11 +60,10 @@ export default {
     }
   },
   mounted() {
-    this.music = this.$refs.music;
-    this.music.addEventListener("ended", () => {
+    /* this.music.addEventListener("ended", () => {
       console.log("hello, ended");
       this.$store.commit("domStore/setIsPlayMusic", false);
-    });
+    }); */
   }
 };
 </script>

@@ -3,7 +3,7 @@
     <!-- 顶部导航栏 -->
     <TopBar v-show="isBegin" @hideMusic="isShowMusic = $event" />
     <!-- 加载动画 -->
-    <LoadAnimate v-if="isLoadingWords" />
+    <ClockLoading v-show="isLoadingWords" />
     <!-- 背景音乐 -->
     <transition
       enter-active-class="animate__animated animate__fadeInDown"
@@ -30,14 +30,14 @@
 import "@/assets/common/index.scss";
 import TopBar from "@/components/common/TopBar";
 import BgMusic from "@/components/common/BgMusic.vue";
-import LoadAnimate from "@/components/common/LoadAnimate.vue";
+import ClockLoading from "@/components/common/LoadingAnimate/clock.vue";
 import { mapState } from "vuex";
 export default {
   name: "App",
   components: {
     TopBar,
     BgMusic,
-    LoadAnimate
+    ClockLoading
   },
   data: () => ({
     isShowMusic: true
@@ -50,10 +50,8 @@ export default {
   },
   methods: {
     playMusic() {
-      this.$store.commit(
-        "domStore/setIsPlayMusic",
-        !this.$store.state.domStore.isPlayMusic
-      );
+      const musicStatus = this.$store.state.domStore.isPlayMusic;
+      this.$store.commit("domStore/setIsPlayMusic", !musicStatus);
     }
   }
 };

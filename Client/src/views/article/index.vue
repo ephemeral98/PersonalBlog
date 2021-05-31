@@ -60,6 +60,7 @@ import * as articleHttp from "@/service/ArticleService.js";
 import { mapState } from "vuex";
 
 export default {
+  name: "articlePage",
   components: {
     CompHead,
     CommentList,
@@ -68,7 +69,8 @@ export default {
   },
   data: () => ({
     artInfo: {},
-    isLikeThisTime: false // 每次只能like一次（刷新后还能继续like）
+    isLikeThisTime: false, // 每次只能like一次（刷新后还能继续like）
+    beforeMusicStatus: "" // 进来前的背景音乐状态
   }),
   computed: {
     ...mapState("commentStore", ["floorsCount"]),
@@ -93,6 +95,11 @@ export default {
     }
   },
   async created() {
+    // 获取一下进来时的背景音乐状态
+    this.beforeMusicStatus = this.$store.state.domStore.isPlayMusic;
+    // 关掉音乐
+    this.$store.commit("domStore/setIsPlayMusic", false);
+
     // 发送ajax 获取文章信息
     const resp = await articleHttp.getArticleInfo(this.articleId);
     this.artInfo = resp;
@@ -122,6 +129,10 @@ export default {
   },
   beforeDestroy() {
     this.$store.commit("articleStore/setGotLike", false);
+  },
+  destroyed() {
+    // 开启音乐
+    this.$store.commit("domStore/setIsPlayMusic", this.beforeMusicStatus);
   }
 };
 </script>

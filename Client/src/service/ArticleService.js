@@ -3,7 +3,7 @@ import myAxios from "./Request.js";
 
 // 获取所有文章
 async function getAllArticles() {
-  const url = "/articles";
+  const url = "/api/articles";
   return await tools.getNeeded(url);
 }
 

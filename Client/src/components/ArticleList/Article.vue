@@ -28,6 +28,7 @@
 
 <script>
 export default {
+  name: "articleComp",
   props: ["art", "queue"]
 };
 </script>

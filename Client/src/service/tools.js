@@ -84,13 +84,12 @@ async function getNeeded(url, params) {
     const count = resp.data.data.totals;
     const infos = resp.data.data.datas.rows || resp.data.data.datas;
     const artList = infos.map(art => {
-      const { id, title, introduce, Category, face, createdAt } = art;
-
+      const { id, title, introduce, category, face, createdAt } = art;
       return {
         id,
         title,
         introduce,
-        Category,
+        category,
         face,
         ...getEnDate(createdAt)
       };

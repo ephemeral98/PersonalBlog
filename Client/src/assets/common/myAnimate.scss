@@ -25,6 +25,29 @@
   }
 }
 
+// 旋转动画
+@keyframes spinning {
+  0%{
+    transform: rotateZ(0deg);
+  }
+
+  25%{
+    transform: rotateZ(90deg);
+  }
+
+  50%{
+    transform: rotateZ(180deg);
+  }
+
+  75%{
+    transform: rotateZ(270deg);
+  }
+
+  100%{
+    transform: rotateZ(360deg);
+  }
+}
+
 // 彩虹
 @mixin ranbow {
   background-image: radial-gradient(70% 100% at bottom center,
@@ -51,8 +74,6 @@
     }
   }
 }
-
-
 
 // 退场效果
 /* @keyframes disappearing {

@@ -1,5 +1,5 @@
 // 可利用绝对定位or固定定位 垂直水平居中
-@mixin center($type) {
+@mixin center($type:absolute) {
   position: $type;
   left: 50%;
   top: 50%;

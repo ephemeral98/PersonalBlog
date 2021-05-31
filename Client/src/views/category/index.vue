@@ -1,7 +1,7 @@
 <template>
   <v-main class="category">
     <header class="welcome_head">
-      <CentralWord welcomeWord="分类" />
+      <CentralWord welcomeWord="文章分类" />
       <EnterMain></EnterMain>
     </header>
 
@@ -17,14 +17,15 @@
                 query: { CategoryName: kind.name }
               }"
             >
-              <div class="door">
-                <div class="door_inner">
-                  {{ kind.name }} ({{ kind.count || 0 }})
+              <div class="book">
+                <div class="book_face">
+                  {{ kind.name }}
                 </div>
-                <div class="door_l"></div>
-                <div class="door_r"></div>
-                <div class="doorplate">
-                  {{ kind.name }} ({{ kind.count || 0 }})
+                <div class="details">
+                  <h2>{{ kind.name }}</h2>
+                  <div style="margin-top:20px">
+                    累计文章数量：{{ kind.count || 0 }}
+                  </div>
                 </div>
               </div>
             </router-link>
@@ -41,12 +42,12 @@
 // @ is an alias to /src
 import CentralWord from "@/components/common/CentralWord";
 import EnterMain from "@/components/common/CentralWord/EnterMain";
-import MyContainer from "@/components/common/MyContainer.vue";
+import MyContainer from "@/components/layouts/MyContainer.vue";
 import MyFoot from "@/components/common/MyFoot.vue";
 import * as categoryHttp from "@/service/CategoryService.js";
 
 export default {
-  name: "Home",
+  name: "category",
   components: {
     CentralWord,
     EnterMain,
@@ -57,7 +58,19 @@ export default {
     categories: {}
   }),
   async created() {
-    this.categories = await categoryHttp.getAllKindAndCount();
+    try {
+      const resp = await categoryHttp.getAllKindAndCount();
+      // 去掉分类标题的 书名号
+      const res = resp.map(item => {
+        item.name = item.name.replace("《", "");
+        item.name = item.name.replace("》", "");
+        return item;
+      });
+
+      this.categories = res;
+    } catch (error) {
+      console.log("获取文章分类失败");
+    }
   }
 };
 </script>
@@ -80,97 +93,84 @@ export default {
     .content {
       width: 90%;
 
-      .door {
-        width: 200px;
-        height: 200px;
-        box-shadow: 0 0 5px #333;
-        background-size: 100% 100%;
-        position: relative;
-        perspective: 1000px;
-        margin: 2vw;
+      .book {
+        $bookBg: #3b515c;
 
-        .door_inner {
+        width: 200px;
+        height: 300px;
+        margin: 2vw;
+        background: #fff;
+        color: #333;
+        transform-style: preserve-3d;
+        /* 开启3D空间 */
+        transform: perspective(2000px);
+        box-shadow: inset 300px 0 50px rgba(0, 0, 0, 0.5),
+          0 20px 100px rgba(0, 0, 0, 0.5);
+        transition: 1s;
+
+        &:hover {
+          transform: perspective(2000px) rotate(-10deg);
+          box-shadow: inset 20px 0 50px rgba(0, 0, 0, 0.5),
+            0 10px 100px rgba(0, 0, 0, 0.5);
+        }
+
+        &::before {
+          /*上边框*/
+          content: "";
+          position: absolute;
+          /* top: -5px; */
+          left: 0;
           width: 100%;
+          height: 5px;
+          /* z-index: 10; */
+          background-color: $bookBg;
+          /* transform: skewX(-45deg); */
+          /*X轴扭曲*/
+        }
+
+        &::after {
+          /*右边框*/
+          content: "";
+          position: absolute;
+          top: 0;
+          right: -5px;
+          width: 5px;
           height: 100%;
-          font-size: 25px;
-          color: $green;
+          background-color: $bookBg;
+        }
+
+        .book_face {
+          background-color: $bookBg;
+          border: solid 3px #333;
+          border-left: none;
+          width: 102%;
+          height: 100%;
+          position: relative;
+          transform-origin: left;
+          /*更改元素变形位置*/
+          transition: 1s cubic-bezier(0.15, 1.7, 0.84, 0.58);
           @include flexCenter;
-          background-image: linear-gradient(
-            to right bottom,
-            $my_blue,
-            plum,
-            skyblue,
-            $my_pink
-          );
+          font-size: 20px;
+          font-weight: bold;
+          padding: 20px;
+          box-sizing: border-box;
         }
 
         &:hover {
-          .doorplate {
-            display: none;
-          }
-          .door_l {
-            transform: rotateY(-120deg);
-          }
-          .door_r {
-            transform: rotateY(120deg);
+          .book_face {
+            transform: rotateY(-155deg);
+            /*Y轴转动*/
           }
         }
 
-        @mixin door_config {
-          width: 50%;
-          height: 100%;
-          background-color: #fdcd2c;
+        .details {
+          /*文本效果*/
           position: absolute;
           top: 0;
-          transition: all 0.5s;
-
-          &::before {
-            content: "";
-            border: 1px solid #000000;
-            width: 20px;
-            height: 20px;
-            position: absolute;
-            top: 50%;
-            border-radius: 50%;
-            transform: translateY(-50%);
-          }
-        }
-
-        // 左门
-        .door_l {
-          @include door_config;
           left: 0;
-          border-right: 1px solid #000000;
-          transform-origin: left;
-
-          &::before {
-            right: 5px;
-          }
-        }
-
-        // 右门
-        .door_r {
-          @include door_config;
-          right: 0;
-          border-left: 1px solid #000;
-          transform-origin: right;
-
-          &::before {
-            left: 5px;
-          }
-        }
-
-        // 门牌
-        .doorplate {
-          min-width: 120px;
-          max-width: 180px;
-          background-color: pink;
-          position: absolute;
-          left: 10%;
-          top: 59%;
-          text-align: center;
-          padding: 5px 0 10px;
-          transform: rotateZ(-10deg);
+          box-sizing: border-box;
+          padding: 20px;
+          z-index: -1;
         }
       }
     }

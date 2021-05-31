@@ -34,7 +34,9 @@ async function addNewComment({
   commentContent,
   email,
   toWho,
-  tag = "1"
+  tag = "1",
+  loadTimes,
+  limit
 }) {
   const url = `/comment`;
   console.log(nickName);
@@ -46,7 +48,9 @@ async function addNewComment({
     content: commentContent,
     email,
     toWho,
-    tag
+    tag,
+    start: loadTimes,
+    limit
   });
   return resp;
 }

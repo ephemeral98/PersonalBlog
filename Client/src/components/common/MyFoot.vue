@@ -1,7 +1,10 @@
 <template>
   <div class="my_foot mt-10">
     <div>Created in 2020 By Barry</div>
-    <div>只有越来越强大，才能越来越童话</div>
+    <div>
+      <!-- Some things happen by chance. Some things happen because we make them
+      happen -->
+    </div>
     <a class="record" href="https://beian.miit.gov.cn" target="_blank"
       >粤ICP备2020139302号</a
     >

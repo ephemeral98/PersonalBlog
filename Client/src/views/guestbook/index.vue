@@ -22,6 +22,7 @@ import CommentList from "@/components/comment/CommentList.vue";
 import MyFoot from "@/components/common/MyFoot.vue";
 import ToolsBar from "@/components/common/ToolsBar";
 export default {
+  name: "guestbook",
   components: {
     CommentList,
     CentralWord,

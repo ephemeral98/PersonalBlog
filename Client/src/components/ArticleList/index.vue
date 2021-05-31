@@ -13,6 +13,7 @@
 <script>
 import Article from "./Article.vue";
 export default {
+  name: "articleListComp",
   props: ["articles"],
   components: {
     Article

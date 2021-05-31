@@ -23,6 +23,44 @@
   }
 }
 
+/**
+ * 清除浮动
+ */
+@mixin clearfix {
+  &::after{
+    content:'';
+    display: block;
+    clear: both;
+  }
+}
+
+// 开篇
+.monologue {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 25px;
+  background-color: $pink_blue;
+  @include flexCenter;
+  align-items: flex-start;
+  padding: 30px 10px 10px;
+  box-sizing: border-box;
+  color: #fff;
+  z-index: $top_level;
+}
+
+// 遮罩层
+@mixin mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(51, 51, 51, 0.719);
+  z-index: $pop_level;
+}
 
 // 进度条
 #nprogress {
@@ -43,7 +81,7 @@
 }
 
 .v-application--wrap {
-  background-image: url("#{$bgPicture}");
-  background-size: cover;
+  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("#{$bgPicture}") no-repeat 0% 20%/ cover;
+
   background-attachment: fixed;
 }

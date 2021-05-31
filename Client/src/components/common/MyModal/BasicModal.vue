@@ -4,7 +4,7 @@
     <div class="info" :style="basicConfig && basicConfig.modalStyle">
       <div class="title">
         <slot name="title">
-          <div class="title">来自管理员的友情提示:</div>
+          <div class="title">友情提示:</div>
         </slot>
       </div>
       <div :class="basicConfig.msg ? 'contentMsg' : 'content'">

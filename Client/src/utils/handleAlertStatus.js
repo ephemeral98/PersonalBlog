@@ -2,14 +2,20 @@ const countDown = 2300; // 弹窗消失时间 秒
 
 /**
  * 处理结果弹窗配置
- * @param {Object} resp 响应结果
+ * @param {Object} type 响应结果
  * @param {Object} that Vue组件实例对象
  * @param {String} succMsg 成功的消息
  * @param {String} failMsg 失败的消息
+ * @param {Boolean} isReflash 是否刷新页面
  */
-export function handleRes(that, resp, succMsg = "成功", failMsg = "失败") {
-  console.log(resp);
-  if (resp.data.status === "success") {
+export function handleRes(
+  that,
+  type,
+  succMsg = "成功",
+  failMsg = "失败",
+  isReflash = true
+) {
+  if (type === "success") {
     that.alertConfig.type = "success";
     that.alertConfig.alertColor = "green";
     that.alertConfig.alertContent = succMsg;
@@ -22,7 +28,7 @@ export function handleRes(that, resp, succMsg = "成功", failMsg = "失败") {
   const timer = setTimeout(() => {
     clearTimeout(timer);
     that.alertConfig.isShowAlert = false;
-    that.$router.go(0);
+    isReflash && that.$router.go(0);
   }, countDown);
 }
 

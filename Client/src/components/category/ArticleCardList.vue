@@ -47,7 +47,6 @@ export default {
         this.start,
         4
       );
-      console.log(resp);
       this.articles = resp.artList;
       this.totals = resp.count;
       this.start++;

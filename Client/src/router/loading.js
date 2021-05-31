@@ -14,5 +14,6 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach(() => {
   NProgress.done();
-  store.commit("domStore/setIsLoadingWordsFast", true); // 加速 加载动画
+  // 加速 加载动画
+  store.commit("domStore/setIsLoadingWordsFast", true);
 });

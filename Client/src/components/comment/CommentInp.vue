@@ -3,8 +3,6 @@
     <v-row class="my_title iconfont">评论 &#xe658;</v-row>
     <v-row>
       <textarea
-        name=""
-        id=""
         cols="30"
         rows="10"
         :placeholder="
@@ -87,6 +85,7 @@ export default {
     }
   },
   methods: {
+    // 控制文本输入最大量
     controlMax() {
       const len = this.commentContent.length;
       if (len >= 300) {
@@ -112,6 +111,10 @@ export default {
       console.log(this.nickName);
       this.parent = floorId ? floorId : "-1";
       const parent = this.parent;
+
+      // 从父组件 CommentList 中获取当前加载到第几次，和每次多少条
+      const { loadTimes, limit } = this.$parent;
+
       const addCommentConfig = {
         blogId,
         parent,
@@ -119,11 +122,25 @@ export default {
         commentContent,
         email,
         toWho: replyerName,
-        tag: "1"
+        tag: "1",
+        loadTimes,
+        limit
       };
+
       // 发送ajax请求
       const resp = await commentHttp.addNewComment(addCommentConfig);
-      handleAlert.handleRes(this, resp, "评论成功", "评论失败");
+      handleAlert.handleRes(
+        this,
+        resp.data.status,
+        "评论成功",
+        "评论失败",
+        false
+      );
+      this.$store.dispatch("commentStore/getMoreComments", [
+        loadTimes,
+        limit,
+        blogId
+      ]);
       // 清空输入内容
       this.commentContent = "";
     }

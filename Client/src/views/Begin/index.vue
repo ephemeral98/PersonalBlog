@@ -11,7 +11,7 @@
       <!-- 打字效果 -->
       <v-row justify="center" class="introduce" ref="typeContent"></v-row>
     </CentralWord>
-    <router-link :to="{ name: 'articleList' }">
+    <router-link :to="{ name: 'about' }">
       <BlinkBtn class="start_btn" @click.native="playMusic">Start</BlinkBtn>
     </router-link>
     <!-- <BgMusic :notTopBar="true" /> -->
@@ -27,10 +27,10 @@ import CentralWord from "@/components/common/CentralWord";
 import BlinkBtn from "@/components/common/BlinkBtn.vue";
 import dayWordsHttp from "@/service/DayWordsService.js";
 import Star from "./Star.js";
-import typing from "@/utils/typing.js";
 // import BgMusic from "@/components/common/BgMusic.vue";
 
 export default {
+  name: "Begins",
   components: {
     CentralWord,
     BlinkBtn
@@ -44,6 +44,7 @@ export default {
     stars: [],
     initStartPop: 49 // 星星数
   }),
+
   methods: {
     setCanvasSize() {
       this.canvas.setAttribute("width", window.innerWidth);
@@ -77,8 +78,16 @@ export default {
     }
   },
   async created() {
-    this.typingContent = await dayWordsHttp();
-    typing(this.$refs.typeContent, this.typingContent, true, 5);
+    this.$store.commit(
+      "domStore/setBgMusicUrl",
+      `${this.globalConst.qiBaseURL}/timeSpacePure.mp3`
+    );
+    try {
+      this.typingContent = await dayWordsHttp();
+      this.$typing(this.$refs.typeContent, this.typingContent, true, 5);
+    } catch (err) {
+      console.log("获取每日一句失败");
+    }
   },
   mounted() {
     this.sky = this.$refs.sky;
@@ -87,6 +96,12 @@ export default {
 
     this.setCanvasSize();
     this.init();
+  },
+  destroyed() {
+    this.$store.commit(
+      "domStore/setBgMusicUrl",
+      this.globalConst.defaultBgMusic
+    );
   }
 };
 </script>
