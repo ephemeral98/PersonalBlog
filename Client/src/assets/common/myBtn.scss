@@ -1,0 +1,64 @@
+// 确认和取消按钮
+.confirm_btn,
+.cancel_btn {
+  height: 40px;
+  align-self: center;
+  padding: 20px;
+  font-size: 20px;
+  line-height: 0;
+  background-color: lightblue;
+  border-radius: 8px;
+  transition: all 1s;
+
+  &:hover {
+    background-color: pink;
+  }
+}
+
+// 工具按钮
+@mixin toolsBtn($color:hotpink) {
+  width: 43px;
+  height: 43px;
+  background-color: $color;
+  text-align: center;
+  line-height: 43px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 0.5vh;
+}
+
+// 显示更多
+@mixin more($w:140px) {
+  width: $w;
+  padding: 5px 10px;
+  border: solid 1px lighten(gray, 40%);
+  font-size: 20px;
+  color: gray;
+  transition: all 0.8s;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 3px;
+  text-align: center;
+  // font-size: 3vw;
+
+  &:hover {
+    box-shadow: 0 0 20px lighten(gray, 10%);
+  }
+
+  @media screen and (max-width:$phone_computer){
+    &{
+      font-size: 15px;
+    }
+  }
+}
+
+// 没有更多了
+@mixin nomore($w:140px) {
+  @include more($w);
+  border: none;
+
+  &:hover {
+    box-shadow: none;
+  }
+}

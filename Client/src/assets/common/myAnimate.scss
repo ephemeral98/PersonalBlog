@@ -1,0 +1,89 @@
+// 左右抖动效果
+@keyframes shake {
+  0% {
+    transform: rotate(20deg);
+  }
+
+  20% {
+    transform: rotate(-20deg);
+  }
+
+  40% {
+    transform: rotate(20deg);
+  }
+
+  60% {
+    transform: rotate(-20deg);
+  }
+
+  80% {
+    transform: rotate(20deg);
+  }
+
+  100% {
+    transform: rotate(-20deg);
+  }
+}
+
+// 旋转动画
+@keyframes spinning {
+  0%{
+    transform: rotateZ(0deg);
+  }
+
+  25%{
+    transform: rotateZ(90deg);
+  }
+
+  50%{
+    transform: rotateZ(180deg);
+  }
+
+  75%{
+    transform: rotateZ(270deg);
+  }
+
+  100%{
+    transform: rotateZ(360deg);
+  }
+}
+
+// 彩虹
+@mixin ranbow {
+  background-image: radial-gradient(70% 100% at bottom center,
+      skyblue 5%,
+      #73C9E5 10%,
+      #fa7a7a 25%,
+      #008c8c 38%,
+      plum 49%,
+      #f7f7b6 61%,
+      #fb7299 72%,
+      skyblue 90%);
+
+  @media screen and (max-width:$phone_computer) {
+    & {
+      background-image: radial-gradient(100% 80% at bottom center,
+          skyblue 5%,
+          #73C9E5 10%,
+          #fa7a7a 25%,
+          #008c8c 38%,
+          plum 49%,
+          #f7f7b6 61%,
+          #fb7299 72%,
+          skyblue 90%);
+    }
+  }
+}
+
+// 退场效果
+/* @keyframes disappearing {
+  0% {
+    margin-left: 5vw;
+    opacity: 1;
+  }
+
+  100% {
+    margin-left: 5vw;
+    opacity: 0;
+  }
+} */
