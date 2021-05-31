@@ -1,0 +1,72 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1920558",
+      "name": "垃圾桶",
+      "font_class": "lajitong",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "6236878",
+      "name": "上",
+      "font_class": "shang",
+      "unicode": "e7f7",
+      "unicode_decimal": 59383
+    },
+    {
+      "icon_id": "12206707",
+      "name": "首页-选中",
+      "font_class": "index",
+      "unicode": "e503",
+      "unicode_decimal": 58627
+    },
+    {
+      "icon_id": "12594443",
+      "name": "修 改",
+      "font_class": "xiugai",
+      "unicode": "e759",
+      "unicode_decimal": 59225
+    },
+    {
+      "icon_id": "12871272",
+      "name": "下",
+      "font_class": "xia",
+      "unicode": "e66f",
+      "unicode_decimal": 58991
+    },
+    {
+      "icon_id": "13039044",
+      "name": "返 回",
+      "font_class": "fanhui",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "15106265",
+      "name": "删除筛选项",
+      "font_class": "delete",
+      "unicode": "e534",
+      "unicode_decimal": 58676
+    },
+    {
+      "icon_id": "16249365",
+      "name": "添加",
+      "font_class": "add-fill",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "18083589",
+      "name": "返 回",
+      "font_class": "fanhui1",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    }
+  ]
+}

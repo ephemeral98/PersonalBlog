@@ -1,0 +1,33 @@
+// 可利用绝对定位or固定定位 垂直水平居中
+@mixin center($type) {
+  position: $type;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// 弹性盒的 垂直水平居中
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// 弹窗居中(temp)
+@mixin modal__center {
+  @include center(fixed);
+  z-index: 999999
+}
+
+// 带动画的弹窗居中
+@mixin modal_center($maxWidth:250px, $maxHeight:50px) {
+  width: $maxWidth;
+  height: $maxHeight;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto auto;
+  z-index: $pop_level;
+}
