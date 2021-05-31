@@ -4,11 +4,11 @@ const Article = require('../model/Article.js');
 const Category = require('../model/Category.js');
 
 // 根据 分类 去查询所有文章
-exports.getArticleByKind = async (CategoryId) => {
+exports.getArticleByKind = async (categoryId) => {
   const res = await Article.findAndCountAll({
     include: [Category],
     where: {
-      CategoryId
+      categoryId
     }
   });
   if (res) {
@@ -23,15 +23,15 @@ exports.getArticleByKind = async (CategoryId) => {
 
 /**
  * 根据分类 分段去查询所有文章
- * @param {*} CategoryId 分类id
+ * @param {*} categoryId 分类id
  * @param {*} start 第几次加载
  * @param {*} limit 每次加载多少条
  */
-exports.getArtByKindSection = async (CategoryId, { start, limit }) => {
+exports.getArtByKindSection = async (categoryId, { start = 1, limit = 5 }) => {
   const res = await Article.findAndCountAll({
     include: [Category],
     where: {
-      CategoryId
+      categoryId
     },
     limit: start * limit,
     offset: 0,
@@ -103,7 +103,7 @@ exports.addArticle = async (articleObj) => {
         allowEmpty: true,
       },
     },
-    CategoryId: {
+    categoryId: {
       presence: {
         allowEmpty: false
       }

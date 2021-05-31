@@ -4,6 +4,8 @@ require('./Article.js');
 require('./Category.js');
 require('./Comment.js');
 require('./DayWords.js');
+require('./Skill.js');
+require('./Marriage.js');
 // require('./reComment.js');
 // require('./Guestbook.js');
 // require('./reGuestbook.js');

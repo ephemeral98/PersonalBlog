@@ -27,6 +27,7 @@
     "validate.js": "^0.13.1"
   },
   "devDependencies": {
+    "nodemailer": "^6.6.0",
     "nodemon": "^2.0.4"
   }
 }

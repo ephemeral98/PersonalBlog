@@ -1,5 +1,5 @@
 const Admins = require('./Admin.js');
-const Categories = require('./Category.js');
+const Category = require('./Category.js');
 const Article = require('./Article.js');
 const Comment = require('./Comment.js');
 // const reComment = require('./reComment.js');
@@ -9,10 +9,10 @@ const Comment = require('./Comment.js');
 // 建立关系
 
 // 一个用户有多个文章分类（一对多）
-/* Admins.hasMany(Categories, {
+/* Admins.hasMany(Category, {
   foreignKey: 'loginId'
 });
-Categories.belongsTo(Admins); */
+Category.belongsTo(Admins); */
 
 // 一个用户有多个文章（一对多）
 /* Admins.hasMany(Article, {
@@ -21,8 +21,8 @@ Categories.belongsTo(Admins); */
 Article.belongsTo(Admins); */
 
 // 一个分类有多个文章，（一对多）
-Categories.hasMany(Article);
-Article.belongsTo(Categories);
+Category.hasMany(Article);
+Article.belongsTo(Category);
 
 // 一篇文章可以有多条评论，（一对多）
 /* Article.hasMany(Comment, {

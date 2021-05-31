@@ -14,7 +14,7 @@ const app = express();
 /**
  * 是否允许 cors 跨域请求
  */
-const whiteList = ["http://localhost:4399", "http://localhost:8081", "http://localhost:8080", "http://127.0.0.1:5500", "http://127.0.0.1:5501", "http://localhost:5006", "http://localhost:5002", "http://localhost:2333"];
+const whiteList = ["http://gzqsoul.icu","http://www.guozhenqiang.xyz","http://guozhenqiang.xyz","http://8.129.235.98", "http://localhost:2333", "http://localhost:8023", "http://localhost:8024", 'http://barry.cn1.utools.club',"http://localhost:4399"];
 app.use(
   cors({
     origin(origin, callback) {
@@ -46,7 +46,7 @@ app.use(
 /**
  * 快速搭建第三方服务器
  */
-const staticRoot = path.resolve(__dirname, '../../public');
+const staticRoot = path.resolve(__dirname, '../../html');
 app.use(express.static(staticRoot));
 
 
@@ -74,12 +74,14 @@ app.use(express.json());
  * 各种接口
  */
 // app.use(require('./utils/captchaMid.js'));
-app.use('/admin', require('./api/admin.js')); //用户接口
-app.use('/categories', require('./api/category.js')); // 文章分类接口
-app.use('/articles', require('./api/article.js')); //文章接口：用户/分类名字/
+app.use('/api/admin', require('./api/admin.js')); //用户接口
+app.use('/api/categories', require('./api/category.js')); // 文章分类接口
+app.use('/api/articles', require('./api/article.js')); //文章接口：用户/分类名字/
 app.use('/api/upload', require('./api/upload.js')); // 文创头像接口
-app.use('/comment', require('./api/comment.js')); // 评论接口：用户/分类名字/文章id
-app.use('/dayWords', require('./api/dayWords.js')); // 评论接口：用户/分类名字/文章id
+app.use('/api/comment', require('./api/comment.js')); // 评论接口：用户/分类名字/文章id
+app.use('/api/dayWords', require('./api/dayWords.js')); // 评论接口：用户/分类名字/文章id
+app.use('/api/getSKills', require('./api/skill.js')); // 获取技能
+app.use('/api/marriage', require('./api/marriage.js')); // 缘分模块
 app.use(require('./utils/errMiddleware.js')); //捕获错误
 
 

@@ -30,14 +30,14 @@ exports.getAllCount = async () => {
   const count = [];
   for (let i = 0, len = ids.length; i < len; i++) {
     console.log(ids[i]);
-    const resp = await Article.findAndCountAll({  // 找到所有文章，拿文章的CategoryId 去碰 分类的id
+    const resp = await Article.findAndCountAll({  // 找到所有文章，拿文章的categoryId 去碰 分类的id
       where: {
-        CategoryId: ids[i]
+        categoryId: ids[i]
       }
     });
-    // const id = rows.map(item => item.CategoryId);
+    // const id = rows.map(item => item.categoryId);
     const res = {
-      id: resp.count && resp.rows[0].CategoryId, // 如果count!==0,说明该分类下有文章
+      id: resp.count && resp.rows[0].categoryId, // 如果count!==0,说明该分类下有文章
       count: resp.count
     }
     resp.length !== 0 ? count.push(Promise.resolve(res)) : count.push(Promise.reject(res));
@@ -55,7 +55,7 @@ exports.getAllCount = async () => {
 exports.getCount = async (id) => {
   const res = await Article.findAndCountAll({
     where: {
-      CategoryId: id,
+      categoryId: id,
     }
   });
   return res.count;
@@ -164,12 +164,12 @@ exports.delKindById = async (id) => {
 
 /**
  * 将删除的分类下的文章 设置为未分类的
- * @param {*} CategoryId 分类id
+ * @param {*} categoryId 分类id
  */
-async function setArtUnselected(CategoryId) {
-  await Article.update({ CategoryId: 1 }, {
+async function setArtUnselected(categoryId) {
+  await Article.update({ categoryId: 1 }, {
     where: {
-      CategoryId
+      categoryId
     }
   });
 }

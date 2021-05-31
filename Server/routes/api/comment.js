@@ -28,7 +28,7 @@ router.get('/', async (req, res, next) => {
 
 // 添加评论
 router.post('/', async (req, res, next) => {
-  const { content } = req.body;
+  const { content, blogId, limit, start } = req.body;
   if (!content) {
     res.send(sendMsg.getErr("内容不能为空"));
     return;
@@ -41,7 +41,10 @@ router.post('/', async (req, res, next) => {
 
   const resp = await CommentService.submitComment(req.body);
   if (typeof (resp) !== "string") {
-    res.send(sendMsg.getResult(resp, "添加评论成功"));
+    // 重新获取评论列表
+    const getCommentResp = await CommentService.getCommentArea({blogId, limit, start});
+    res.send(sendMsg.getResult(getCommentResp, "添加评论成功"));
+
   } else {
     res.send(sendMsg.getErr(resp + "添加评论失败"))
   }

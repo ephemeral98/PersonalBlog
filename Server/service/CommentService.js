@@ -54,7 +54,14 @@ exports.getCommentArea = async (guestObj) => {
 }
 
 
-// 提交评论（增加一条评论）
+/**
+ * 添加评论
+ * @param {String} content 评论内容
+ * @param {String} blogId 博客id
+ * @param {String} parent 是不是回复
+ * @param {String} tag 0:博主，1:访客
+ * @returns
+ */
 exports.submitComment = async (commentObj) => {
   const rules = {
     content: {

@@ -2,7 +2,7 @@
 const sequelize = require('./db.js');
 const { DataTypes } = require('sequelize');
 
-const Comment = sequelize.define('Comment', {
+const Comment = sequelize.define('comments', {
   name: {
     type: DataTypes.STRING,
     allowNull: true,
